@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo Cosiam | Presentación Proyecto Aplicación Web</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ================= HEADER CORPORATIVO ================= -->
+    <header id="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-badge">COSIAM</div>
+                <div class="brand-text">
+                    <h1>GRUPO COSIAM</h1>
+                    <span>Soluciones para Cocinas Industriales</span>
+                </div>
+            </div>
+
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+                ☰
+            </button>
+
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+                    <li><a href="#preguntas" class="nav-link">Preguntas</a></li>
+                    <li><a href="#objetivo" class="nav-link">Objetivo</a></li>
+                    <li><a href="#servidor" class="nav-link">Conceptos</a></li>
+                    <li><a href="#estatica-vs-dinamica" class="nav-link">Estática vs Dinámica</a></li>
+                    <li><a href="#costos" class="nav-link">Inversión ($)</a></li>
+                    <li><a href="#buy-a-feature" class="nav-link">Tiempo (Buy a Feature)</a></li>
+                    <li><a href="#cierre" class="nav-link">Decisión Final</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================= SECCIÓN 1: HERO ================= -->
+    <section id="inicio" class="hero-section">
+        <div class="hero-content reveal">
+            <span class="hero-tag">Propuesta de Modernización Tecnológica</span>
+            <h2>Proyecto Aplicación Web</h2>
+            <p>Plataforma centralizada 24/7 para la gestión dinámica de mantenimientos, cotizaciones de clientes y control de proveedores de Grupo Cosiam.</p>
+            <a href="#preguntas" class="btn-primary">Iniciar Presentación</a>
+        </div>
+    </section>
+
+    <!-- ================= SECCIÓN 2: PREGUNTAS CLAVE ================= -->
+    <section id="preguntas" class="section-wrapper">
+        <div class="section-header reveal">
+            <span class="section-step">Sección 02 • Punto de Partida</span>
+            <h3>Preguntas Clave para Dirección</h3>
+            <p>Antes de hablar de tecnología, tengamos presentes estas tres preguntas que guiarán toda la presentación.</p>
+        </div>
+
+        <div class="questions-grid">
+            <div class="question-card reveal">
+                <div class="question-number">1</div>
+                <h4>¿Qué quieren hacer exactamente?</h4>
+                <p>Definir el alcance real de nuestra propia plataforma digital para que clientes y proveedores trabajen con nosotros en un solo lugar seguro.</p>
+            </div>
+
+            <div class="question-card reveal">
+                <div class="question-number">2</div>
+                <h4>¿Por qué lo quieren hacer?</h4>
+                <p>Identificar qué problemas actuales queremos resolver: el envío manual de cotizaciones, los archivos estáticos y el tiempo invertido en seguimiento.</p>
+            </div>
+
+            <div class="question-card reveal">
+                <div class="question-number">3</div>
+                <h4>¿Qué ganan todos con esto?</h4>
+                <p>Visualizar el beneficio directo para la dirección de Cosiam, la comodidad para clientes como Toyota y el orden para nuestros proveedores.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECCIÓN 3: OBJETIVO DEL PROYECTO ================= -->
+    <div class="section-alt">
+        <section id="objetivo" class="section-wrapper">
+            <div class="section-header reveal">
+                <span class="section-step">Sección 03 • Visión General</span>
+                <h3>El Objetivo del Proyecto</h3>
+                <p>Transformar nuestras propuestas estáticas en un sistema vivo y disponible las 24 horas del día.</p>
+            </div>
+
+            <div class="objective-box reveal">
+                <h4>¿Por qué nace esta plataforma en Cosiam?</h4>
+                <p>Cosiam no deja de ser una empresa de cocinas industriales donde se realizan mantenimientos a cada rato y, conforme pasa el tiempo, se generan cotizaciones nuevas constantemente.</p>
+                <p>Por ello, se busca crear un <strong>sistema de inicio de sesión (loggeo) que esté activo 24/7</strong> con 3 tipos de usuarios: <strong>Administrador, Proveedor y Cliente</strong>. En resumen, una plataforma donde los propios clientes puedan ver sus propuestas de forma dinámica y nada estática, mientras que los proveedores puedan consultar información clave de la empresa.</p>
+            </div>
+
+            <div class="roles-grid">
+                <div class="role-card reveal">
+                    <h5>1. Usuario Administrador (Cosiam)</h5>
+                    <p>Gestiona usuarios, asigna permisos y controla las configuraciones del sistema. Decide qué información ve cada cliente y cada proveedor.</p>
+                </div>
+
+                <div class="role-card reveal">
+                    <h5>2. Usuario Proveedor</h5>
+                    <p>Puede entrar a consultar información sobre Cosiam, revisar costos, requerimientos de refacciones y otros apartados operativos.</p>
+                </div>
+
+                <div class="role-card reveal">
+                    <h5>3. Usuario Cliente (Ej. Toyota)</h5>
+                    <p>Puede ver su propia página web y sus cotizaciones activas. Si el cliente es Toyota, entra a su propio entorno dinámico pensado exclusivamente para él.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= SECCIÓN 4: EL SERVIDOR ================= -->
+    <section id="servidor" class="section-wrapper">
+        <div class="section-header reveal">
+            <span class="section-step">Sección 04 • Conceptos Básicos (1/5)</span>
+            <h3>¿Qué es un Servidor?</h3>
+            <p>Para entender cómo funcionará nuestra aplicación por dentro, llevémoslo al terreno que mejor conocemos: un restaurante.</p>
+        </div>
+
+        <div class="concept-container reveal">
+            <div class="concept-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1000&q=80" alt="Cocinero en restaurante preparando platillos">
+                <div class="image-caption">Ejemplo visual: El servidor trabaja como el cocinero en la cocina preparando cada pedido.</div>
+            </div>
+
+            <div class="concept-text">
+                <div class="metaphor-intro">
+                    "Un servidor es como el cocinero de un restaurante. Imagina que el restaurante es el internet."
+                </div>
+
+                <div class="concept-subtitle">¿Cómo funciona? (La mesa y la cocina)</div>
+                <ul class="concept-list">
+                    <li><strong>El Cliente (Tú):</strong> Eres el comensal sentado a la mesa. Cuando usas tu teléfono o tu computadora para ver una foto o leer el periódico, es como si le pidieras un platillo al mesero. Tu aparato hace la solicitud.</li>
+                    <li><strong>La Red (El Mesero):</strong> Toma tu pedido y lo lleva corriendo a la cocina.</li>
+                    <li><strong>El Servidor (El Cocinero):</strong> Es el cocinero que está en la trastienda. Él no se mueve de la cocina, pero tiene todos los ingredientes guardados (fotos, videos, páginas web). Recibe tu pedido, lo prepara (procesa la información) y se lo entrega al mesero para que te lo lleve a la mesa.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECCIÓN 5: ESCALABILIDAD ================= -->
+    <div class="section-alt">
+        <section id="escalabilidad" class="section-wrapper">
+            <div class="section-header reveal">
+                <span class="section-step">Sección 05 • Conceptos Básicos (2/5)</span>
+                <h3>¿Qué es la Escalabilidad?</h3>
+                <p>Cómo crece el sistema cuando el negocio empieza a tener más clientes.</p>
+            </div>
+
+            <div class="concept-container reverse reveal">
+                <div class="concept-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80" alt="Edificios corporativos modernos">
+                    <div class="image-caption">Ejemplo visual: Construir un piso más arriba o abrir otra sucursal según la necesidad.</div>
+                </div>
+
+                <div class="concept-text">
+                    <div class="metaphor-intro">
+                        "Imagina que tu negocio empieza a tener muchísimos clientes y la oficina actual ya no da abasto. Para solucionar el problema y atender a todos, tienes dos opciones:"
+                    </div>
+
+                    <div class="option-card">
+                        <h5>1. Escalabilidad Vertical (Crear un nuevo piso)</h5>
+                        <p>Consiste en hacer más grande y potente tu oficina actual. En lugar de mudarte, construyes un piso nuevo hacia arriba, contratas más secretarias para el mismo edificio y compras escritorios más grandes.</p>
+                        <ul class="concept-list">
+                            <li><strong>En tecnología significa:</strong> No compras computadoras nuevas, sino que a la computadora (servidor) que ya tienes le pones más memoria, más potencia y un motor más rápido.</li>
+                            <li><strong>El límite:</strong> Llega un punto en que el edificio no soporta más pisos hacia arriba (la tecnología tiene un límite físico de tamaño).</li>
+                        </ul>
+                    </div>
+
+                    <div class="option-card">
+                        <h5>2. Escalabilidad Horizontal (Rentar otro local)</h5>
+                        <p>Consiste en abrir una sucursal idéntica en otra calle. En lugar de amontonar todo en un solo edificio, rentas un local nuevo a la vuelta para repartir el trabajo. Si vienen el doble de clientes, abres dos locales más; si bajan los clientes, cierras uno.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= SECCIÓN 6: LOGS (BITÁCORA) ================= -->
+    <section id="logs" class="section-wrapper">
+        <div class="section-header reveal">
+            <span class="section-step">Sección 06 • Conceptos Básicos (3/5)</span>
+            <h3>¿Qué son los Logs (Registros)?</h3>
+            <p>El control exacto de quién entra, qué consulta y qué modifica dentro del sistema.</p>
+        </div>
+
+        <div class="concept-container reveal">
+            <div class="concept-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=80" alt="Registro y control de bitácora empresarial">
+                <div class="image-caption">Ejemplo visual: El libro de bitácora en la entrada de una planta donde todo queda registrado.</div>
+            </div>
+
+            <div class="concept-text">
+                <div class="metaphor-intro">
+                    "Un Log es como la libreta de control que tiene el guardia de seguridad en la caseta de entrada de una planta industrial."
+                </div>
+
+                <div class="concept-subtitle">¿Cómo funciona? (La caseta y el libro de visitas)</div>
+                <ul class="concept-list">
+                    <li><strong>El Visitante (El Usuario):</strong> Es cualquier persona que entra a nuestra aplicación con su cuenta (un cliente de Toyota, un proveedor o un administrador de Cosiam).</li>
+                    <li><strong>El Guardia (El Sistema):</strong> Nunca se distrae ni se duerme. Cada vez que alguien entra o mueve un dato, anota con tinta imborrable: <em>quién entró, a qué hora exacta, qué cotización abrió y qué cambio hizo</em>.</li>
+                    <li><strong>La Libreta (El Log):</strong> Es un historial intocable donde nadie puede arrancar hojas ni borrar lo que pasó.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECCIÓN 7: LA NUBE ================= -->
+    <div class="section-alt">
+        <section id="nube" class="section-wrapper">
+            <div class="section-header reveal">
+                <span class="section-step">Sección 07 • Conceptos Básicos (4/5)</span>
+                <h3>¿Qué es "La Nube"?</h3>
+                <p>Por qué el sistema puede estar encendido las 24 horas sin depender de las computadoras de la oficina.</p>
+            </div>
+
+            <div class="concept-container reverse reveal">
+                <div class="concept-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1000&q=80" alt="Centro de datos moderno de alta seguridad">
+                    <div class="image-caption">Ejemplo visual: Un parque industrial blindado que mantiene el sistema encendido 24/7.</div>
+                </div>
+
+                <div class="concept-text">
+                    <div class="metaphor-intro">
+                        "Para explicar La Nube de forma sencilla, imagina que necesitas resguardar maquinaria crítica de Cosiam. Tienes dos opciones:"
+                    </div>
+
+                    <div class="option-card">
+                        <h5>1. El Método Antiguo (Un cuarto propio en la oficina)</h5>
+                        <p>Compras una computadora costosa y la dejas prendida en la oficina de Cosiam. Si un domingo se va la luz en la colonia o falla el internet de la oficina, el sistema se apaga y nadie puede entrar.</p>
+                    </div>
+
+                    <div class="option-card">
+                        <h5>2. Trabajar en "La Nube" (Rentar en un Parque Industrial Blindado)</h5>
+                        <p>Rentamos un espacio dentro de un complejo de máxima seguridad operado por gigantes tecnológicos (como Amazon o DigitalOcean) con plantas de luz propias y vigilancia 24/7. Aunque en la oficina de Cosiam no haya luz, Toyota puede entrar a ver sus cotizaciones sin interrupción.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= SECCIÓN 8: RESPALDOS (BACKUPS) ================= -->
+    <section id="respaldos" class="section-wrapper">
+        <div class="section-header reveal">
+            <span class="section-step">Sección 08 • Conceptos Básicos (5/5)</span>
+            <h3>¿Qué son los Respaldos (Backups)?</h3>
+            <p>La garantía de que ninguna cotización o historial de mantenimiento se pierda por accidente.</p>
+        </div>
+
+        <div class="concept-container reveal">
+            <div class="concept-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1000&q=80" alt="Seguridad y respaldo digital de documentos">
+                <div class="image-caption">Ejemplo visual: Copias automáticas guardadas bajo llave fuera de la oficina principal.</div>
+            </div>
+
+            <div class="concept-text">
+                <div class="metaphor-intro">
+                    "Un respaldo es como tener a un notario que todas las noches saca fotocopias de los documentos del día y los guarda en una caja fuerte en otra ciudad."
+                </div>
+
+                <div class="concept-subtitle">¿Cómo funciona? (El archivero y la copia de emergencia)</div>
+                <ul class="concept-list">
+                    <li><strong>El Archivero del Día:</strong> Es donde se guardan en vivo todas las cotizaciones y precios que subimos a diario.</li>
+                    <li><strong>El Fotocopiador Nocturno:</strong> De forma programada y automática, el sistema saca una copia exacta de toda la información sin que nadie tenga que acordarse de hacerlo.</li>
+                    <li><strong>La Bóveda Externa:</strong> Si alguien borra una cotización por error humano, podemos "regresar el tiempo" y recuperar los documentos en minutos.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECCIÓN 9: PÁGINA ESTÁTICA VS DINÁMICA ================= -->
+    <div class="section-alt">
+        <section id="estatica-vs-dinamica" class="section-wrapper">
+            <div class="section-header reveal">
+                <span class="section-step">Sección 09 • Evolución Tecnológica</span>
+                <h3>Página Estática (Toyota/CBRE) vs. Aplicación Dinámica</h3>
+                <p>¿Por qué este nuevo proyecto es mucho más complejo y potente que la página de presentación que hicimos para Toyota y CBRE?</p>
+            </div>
+
+            <div class="metaphor-intro reveal" style="max-width: 900px; margin: 0 auto 40px auto; text-align: center;">
+                "Una página estática es como un <strong>menú impreso y plastificado</strong>: si sube el precio de un platillo, tienes que mandar a reimprimir todo el menú. Una página dinámica es como una <strong>pantalla digital conectada a la oficina</strong>: cambias un precio en tu computadora y se actualiza al instante sin tocar los cables."
+            </div>
+
+            <div class="comparison-grid reveal">
+                <!-- Columna Estática -->
+                <div class="comparison-card static-card">
+                    <div class="comp-badge badge-gray">Lo que hicimos antes</div>
+                    <h4>Página Web Estática (Caso Toyota / CBRE)</h4>
+                    <p class="comp-desc">Fue diseñada como una vitrina digital fija para presentar una propuesta puntual.</p>
+                    <ul class="concept-list">
+                        <li><strong>El contenido vive dentro del código:</strong> Cada título, texto, tabla y enlace al PDF está escrito directamente adentro de los archivos de programación.</li>
+                        <li><strong>Requiere de un programador para cada cambio:</strong> Si mañana cambia un costo o queremos agregar una cotización nueva, hay que abrir el código fuente, modificar líneas técnicas a mano y volver a publicar.</li>
+                        <li><strong>No distingue quién entra:</strong> Cualquier persona que tenga el enlace ve exactamente la misma pantalla; no existen cuentas de usuario ni contraseñas.</li>
+                        <li><strong>No requiere servidor activo ni base de datos:</strong> Como solo muestra información fija, es rápida de construir pero no permite operar el día a día.</li>
+                    </ul>
+                </div>
+
+                <!-- Columna Dinámica -->
+                <div class="comparison-card dynamic-card">
+                    <div class="comp-badge badge-amber">Lo que buscamos construir ahora</div>
+                    <h4>Aplicación Web Dinámica (Nuevo Portal Cosiam)</h4>
+                    <p class="comp-desc">Es un sistema de software completo con cerebro propio, base de datos y control de usuarios.</p>
+                    <ul class="concept-list">
+                        <li><strong>Se modifica la información sin tocar el código:</strong> El código solo construye "el molde". El administrador de Cosiam entra con su cuenta, llena un formulario sencillo, sube una cotización nueva y el sistema la publica solo.</li>
+                        <li><strong>Cambia según la persona que inicia sesión:</strong> Es una sola plataforma, pero si entra Toyota ve los equipos y cotizaciones de Toyota; si entra un proveedor, ve los costos y requerimientos de Cosiam.</li>
+                        <li><strong>Mayor complejidad técnica:</strong> Por detrás lleva tres sistemas trabajando juntos: la pantalla visual (Frontend), el motor de seguridad y reglas de negocio (Backend) y el archivero inteligente (Base de Datos).</li>
+                        <li><strong>Interactiva en ambos sentidos:</strong> El cliente o proveedor no solo lee; también puede aprobar propuestas, filtrar fechas o subir información.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= SECCIÓN 10: COSTOS E INFRAESTRUCTURA DETALLADA ================= -->
+    <section id="costos" class="section-wrapper">
+        <div class="section-header reveal">
+            <span class="section-step">Sección 10 • Presupuesto y Detalles Técnicos</span>
+            <h3>¿Cuánto están dispuestos a gastar?</h3>
+            <p>Desglose transparente de cuánto cuesta mantener el sistema encendido 24/7, qué viene incluido y qué se paga por separado.</p>
+        </div>
+
+        <!-- Aviso de Escalabilidad Realista -->
+        <div class="cost-warning-box reveal">
+            <h4>⚠️ Aviso importante sobre la Escalabilidad y el tamaño de Cosiam</h4>
+            <p>Muchas veces se piensa que estar en <strong>Amazon Web Services (AWS)</strong> cuesta miles de pesos al mes. Eso solo le pasa a bancos o tiendas masivas donde entran <strong>50,000 personas al mismo minuto</strong> y necesitan que el servidor crezca solo (escalabilidad automática).</p>
+            <p><strong>La realidad operativa de Cosiam:</strong> Nuestro sistema es de uso empresarial e industrial. Entrarán nuestros clientes (como Toyota o CBRE), nuestros proveedores y los administradores de Cosiam. No van a entrar miles de personas por segundo; por lo tanto, <strong>no conviene pagar el esquema caro y variable de AWS EC2</strong>. Nos conviene un servidor privado de cuota fija mensual.</p>
+        </div>
+
+        <!-- Explicación rápida: Qué es cada gasto (Terreno vs Letrero) -->
+        <div class="anatomy-grid reveal">
+            <div class="anatomy-card">
+                <span class="anatomy-badge badge-Separate">Se Renta por Mes</span>
+                <h5>1. El Servidor (El Local / La Cocina)</h5>
+                <p>Es la computadora en la nube encendida 24/7. Al rentarla, el proveedor solo nos da un número de identificación (Dirección IP, ej. <em>54.210.18.90</em>). <strong>No incluye el nombre ".com"</strong>.</p>
+            </div>
+
+            <div class="anatomy-card">
+                <span class="anatomy-badge badge-Separate">Se Paga 1 Vez al Año (o Gratis)</span>
+                <h5>2. El Dominio Web (El Letrero con Dirección)</h5>
+                <p>Para no entrar escribiendo números raros, se compra un nombre como <em>portalcosiam.com</em> (<strong>$300 a $550 MXN al año</strong>). <br><strong>Nota clave:</strong> Si Cosiam ya tiene dominio para sus correos, podemos crear <strong>gratis</strong> un subdominio como <em>portal.cosiam.com.mx</em>.</p>
+            </div>
+
+            <div class="anatomy-card">
+                <span class="anatomy-badge badge-Included">Costo $0 MXN (Incluido)</span>
+                <h5>3. Candado de Seguridad (HTTPS) y Base de Datos</h5>
+                <p>El candadito verde de seguridad para proteger contraseñas y el programa para guardar la base de datos se instalan dentro del mismo servidor <strong>sin costo mensual adicional</strong>.</p>
+            </div>
+        </div>
+
+        <!-- TABLA COMPARATIVA EJECUTIVA -->
+        <div class="table-container reveal">
+            <h4 class="table-main-title">Tabla Comparativa: ¿Qué opción le conviene más a Grupo Cosiam?</h4>
+            <p class="table-subtitle">Comparativa entre un Servidor Privado Virtual (VPS / AWS Lightsail) contra un servidor tradicional de Amazon (AWS EC2) y una computadora en la oficina.</p>
+
+            <div class="table-responsive">
+                <table class="cost-comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Concepto / Detalle</th>
+                            <th class="col-recommended">
+                                ⭐ Opción 1: Servidor VPS / AWS Lightsail<br>
+                                <span class="th-badge">Recomendado para Cosiam</span>
+                            </th>
+                            <th>
+                                Opción 2: AWS EC2 + RDS<br>
+                                <span class="th-sub">Esquema Corporativo Separado</span>
+                            </th>
+                            <th>
+                                Opción 3: Computadora en Oficina<br>
+                                <span class="th-sub">Servidor Físico Propio</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>¿Qué es en palabras sencillas?</strong></td>
+                            <td class="col-recommended">Rentar un departamento ejecutivo con todos los servicios incluidos en una sola renta fija mensual.</td>
+                            <td>Rentar un edificio donde te cobran por separado el cuarto, el archivero, la luz y cada persona que entra.</td>
+                            <td>Comprar una computadora potente y dejarla prendida día y noche en la oficina de Cosiam.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Costo Mensual Estimado</strong></td>
+                            <td class="col-recommended"><strong class="price-highlight">$140 a $280 MXN / mes</strong><br><small>($7 a $14 USD fijos al mes)</small></td>
+                            <td><strong>$700 a $1,500+ MXN / mes</strong><br><small>($35 a $75+ USD variables al mes)</small></td>
+                            <td><strong>$15,000+ MXN pago inicial</strong><br><small>+ Recibo de luz e internet empresarial</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>¿El precio sube si entran muchos clientes?</strong></td>
+                            <td class="col-recommended"><strong>No.</strong> Es tarifa plana fija. Sabes exactamente cuánto vas a pagar todo el año.</td>
+                            <td><strong>Sí.</strong> Cobra por hora de uso, por gigabyte descargado y por movimiento de datos.</td>
+                            <td>No, pero si entran varios al mismo tiempo el internet de la oficina se vuelve lento.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>¿Incluye el Dominio (.com / .com.mx)?</strong></td>
+                            <td class="col-recommended"><strong>No viene incluido.</strong><br><small>Cuesta ~$400 MXN al año aparte (o <strong>$0 MXN</strong> usando subdominio de Cosiam).</small></td>
+                            <td><strong>No viene incluido.</strong><br><small>Se compra aparte en Amazon Route 53 (~$350 a $550 MXN al año).</small></td>
+                            <td><strong>No viene incluido.</strong><br><small>Además requiere contratar una "IP Fija" cara con Telmex/Totalplay.</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Base de Datos (Donde se guardan cotizaciones)</strong></td>
+                            <td class="col-recommended"><strong>Incluida ($0 extra).</strong><br><small>Se instala dentro del mismo servidor o se usa MongoDB Atlas gratuito.</small></td>
+                            <td><strong>Se cobra aparte (AWS RDS).</strong><br><small>Tener la base de datos separada suma unos ~$350 MXN extra al mes.</small></td>
+                            <td><strong>Incluida ($0 extra).</strong><br><small>Se instala en el disco duro de la misma computadora.</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Espacio para guardar PDFs y Fotos</strong></td>
+                            <td class="col-recommended"><strong>40 GB a 60 GB incluidos.</strong><br><small>Espacio suficiente para guardar más de 25,000 cotizaciones en PDF.</small></td>
+                            <td><strong>Se cobra por cada GB (AWS S3).</strong><br><small>Pagas centavos de dólar por cada archivo guardado y cada vez que alguien lo abre.</small></td>
+                            <td>Depende del disco duro que se compre en la oficina.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Respaldos Automáticos (Backups)</strong></td>
+                            <td class="col-recommended"><strong>+$30 a $55 MXN / mes.</strong><br><small>Se activa con una casilla y guarda copias semanales/diarias.</small></td>
+                            <td><strong>+$80 a $200 MXN / mes.</strong><br><small>Se cobra según el tamaño total de los archivos respaldados.</small></td>
+                            <td><strong>Riesgo Alto.</strong><br><small>Si se daña el disco duro o roban el equipo, se pierde todo.</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Candado de Seguridad (HTTPS / SSL)</strong></td>
+                            <td class="col-recommended"><strong>Gratis ($0 MXN)</strong><br><small>Certificado renovable automático.</small></td>
+                            <td><strong>Gratis ($0 MXN)</strong><br><small>Certificado de Amazon.</small></td>
+                            <td>Complejo de configurar desde una red de oficina normal.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>¿Qué pasa si se va la luz en Cosiam?</strong></td>
+                            <td class="col-recommended"><strong>No pasa nada.</strong> Toyota y proveedores siguen entrando 24/7 sin interrupción.</td>
+                            <td><strong>No pasa nada.</strong> El sistema sigue encendido en los centros de Amazon.</td>
+                            <td><strong>El sistema se apaga por completo.</strong> Nadie puede entrar hasta que regrese la luz.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Nota aclaratoria sobre VPS vs VPN -->
+        <div class="vpn-note-box reveal">
+            <strong>💡 Nota técnica rápida (¿VPS o VPN?):</strong> 
+            En esta tabla hablamos de un <strong>VPS (Servidor Privado Virtual)</strong>, que es la máquina donde vive alojada nuestra aplicación web. No debe confundirse con una <strong>VPN (Red Privada Virtual)</strong>, que es una herramienta distinta usada para conectar computadoras de forma remota. Para este proyecto de clientes y proveedores, lo que contrataremos es un <strong>VPS (como AWS Lightsail o DigitalOcean)</strong>.
+        </div>
+    </section>
+
+    <!-- ================= SECCIÓN 11: BUY A FEATURE (TIEMPO ULTRA ESPECÍFICO) ================= -->
+    <div class="section-alt">
+        <section id="buy-a-feature" class="section-wrapper">
+            <div class="section-header reveal">
+                <span class="section-step">Sección 11 • Desglose Quirúrgico de Tareas</span>
+                <h3>"Buy a Feature": ¿Cuánto tiempo toma construir cada pieza?</h3>
+                <p>En ingeniería de software no existe un botón mágico de "Crear Login" o "Crear Portal". Cada módulo se compone de decenas de engranes invisibles. Aquí la <strong>moneda es el tiempo</strong>: activen o desactiven cada micro-tarea para ver cuánto cuesta realmente armar el sistema.</p>
+            </div>
+
+            <!-- Leyenda de Monedas de Tiempo -->
+            <div class="currency-legend reveal">
+                <div class="currency-item">
+                    <span class="currency-icon">⏱️</span>
+                    <div>
+                        <strong>1 Reloj = 1 Hora de código</strong>
+                        <span>Unidad mínima para ajustes y pantallas simples.</span>
+                    </div>
+                </div>
+                <div class="currency-item">
+                    <span class="currency-icon">☀️</span>
+                    <div>
+                        <strong>1 Sol = 1 Día mío (4 Horas)</strong>
+                        <span>Equivale a 4 Relojes (⏱️⏱️⏱️⏱️) de trabajo efectivo.</span>
+                    </div>
+                </div>
+                <div class="currency-item">
+                    <span class="currency-icon">📅</span>
+                    <div>
+                        <strong>1 Calendario = 1 Semana (20 Horas)</strong>
+                        <span>Equivale a 5 Días laborales (☀️☀️☀️☀️☀️).</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones rápidos de escenarios para la junta -->
+            <div class="feature-controls reveal">
+                <button type="button" class="btn-filter" id="btn-select-mvp">⚡ 1. Solo lo Mínimo para Arrancar (MVP)</button>
+                <button type="button" class="btn-filter btn-recommended-pack" id="btn-select-rec">🏢 2. Paquete Recomendado Cosiam</button>
+                <button type="button" class="btn-filter" id="btn-select-all">🚀 3. Todo el Sistema Completo (31 tareas)</button>
+                <button type="button" class="btn-filter btn-clear" id="btn-clear-all">🗑️ Poner en Cero (Armar a mano)</button>
+            </div>
+
+            <!-- Tablero de Compra y Resumen en Vivo -->
+            <div class="baf-layout">
+                <!-- Catálogo detallado de 31 micro-tareas (Generado por script.js) -->
+                <div class="baf-catalog" id="baf-catalog"></div>
+
+                <!-- Panel Flotante de Costo en Tiempo -->
+                <aside class="baf-summary-panel">
+                    <div class="summary-card">
+                        <h4>📊 Calculadora de Tiempo Real</h4>
+                        <p class="summary-sub">Suma automática según las tareas marcadas a la izquierda:</p>
+
+                        <div class="summary-stats">
+                            <div class="stat-box">
+                                <span class="stat-value" id="total-hours">0</span>
+                                <span class="stat-label">⏱️ Horas Totales</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-value" id="total-days">0</span>
+                                <span class="stat-label">☀️ Días (de 4 hrs)</span>
+                            </div>
+                            <div class="stat-box highlight-stat">
+                                <span class="stat-value" id="total-weeks">0</span>
+                                <span class="stat-label">📅 Semanas (de 20 hrs)</span>
+                            </div>
+                        </div>
+
+                        <div class="visual-tokens-box">
+                            <h5>Pago total en Monedas de Tiempo:</h5>
+                            <div id="tokens-container" class="tokens-container">
+                                <span class="empty-tokens-msg">Selecciona tareas a la izquierda para calcular...</span>
+                            </div>
+                        </div>
+
+                        <div class="selected-count-bar">
+                            Micro-tareas incluidas: <strong id="selected-count">0</strong> de <strong id="total-features-count">0</strong>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= SECCIÓN 12: CIERRE Y LAS 3 PREGUNTAS ================= -->
+    <section id="cierre" class="section-wrapper">
+        <div class="section-header reveal">
+            <span class="section-step">Sección 12 • Toma de Decisiones</span>
+            <h3>Volvamos al Inicio: La Decisión de Dirección</h3>
+            <p>Ahora que conocemos cómo funciona un servidor, por qué una aplicación dinámica es superior a una página estática, cuánto cuesta mantenerla al mes y cuántas semanas toma construir cada pieza, respondamos juntos:</p>
+        </div>
+
+        <div class="questions-grid">
+            <div class="question-card closing-card reveal">
+                <div class="question-number">1</div>
+                <h4>¿Qué quieren hacer exactamente?</h4>
+                <p>¿Con cuáles de los módulos que acabamos de seleccionar en la tabla de tiempo vamos a arrancar la <strong>Fase 1</strong> de la plataforma de Cosiam?</p>
+            </div>
+
+            <div class="question-card closing-card reveal">
+                <div class="question-number">2</div>
+                <h4>¿Por qué lo quieren hacer?</h4>
+                <p>Para dejar atrás los archivos estáticos y centralizar las cotizaciones y mantenimientos de clientes como Toyota en un sistema propio 24/7.</p>
+            </div>
+
+            <div class="question-card closing-card reveal">
+                <div class="question-number">3</div>
+                <h4>¿Qué ganan todos con esto?</h4>
+                <p><strong>Cosiam</strong> gana control, bitácora y ahorro de tiempo; <strong>el Cliente</strong> gana atención inmediata a sus propuestas; y <strong>el Proveedor</strong> gana claridad operativa.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER CORPORATIVO ================= -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h4>GRUPO COSIAM</h4>
+                <p>Equipamiento, Mantenimiento e Ingeniería para Cocinas Industriales</p>
+            </div>
+            <div>
+                <p><strong>Documento:</strong> Presentación Ejecutiva - Proyecto Aplicación Web</p>
+                <p><strong>Disponibilidad proyectada:</strong> Sistema en Línea 24/7</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Grupo Cosiam. Todos los derechos reservados. Uso exclusivo para presentación interna de Dirección.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
