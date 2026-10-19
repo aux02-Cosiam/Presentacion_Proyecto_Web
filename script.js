@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => revealObserver.observe(el));
 
     // =========================================================================
-    // 3. SECCIÓN 11: CATÁLOGO QUIRÚRGICO "BUY A FEATURE" (31 MICRO-TAREAS)
+    // 3. SECCIÓN 11: CATÁLOGO QUIRÚRGICO "BUY A FEATURE" (46 TAREAS)
     // Conversión:
     // ⏱️ 1 Reloj = 1 Hora
     // ☀️ 1 Sol = 1 Día de trabajo = 4 Horas
@@ -74,264 +74,86 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const featuresCatalog = [
         {
-            category: "Módulo 1: Sistema de Acceso y Seguridad (Login Desglosado)",
+            category: "Módulo 1: Sistema de Acceso y Seguridad (Login)",
             items: [
-                {
-                    id: "LOG-01",
-                    title: "Diseño visual de la ventana de Login (Frontend)",
-                    desc: "Maquetar la pantalla con el logo de Cosiam, cajas de correo y contraseña, botón de 'ojito' para ver clave escrita y adaptación a celulares.",
-                    hours: 3,
-                    tier: "mvp"
-                },
-                {
-                    id: "LOG-02",
-                    title: "Bóveda de usuarios y encriptación de contraseñas",
-                    desc: "Programar la tabla en la base de datos para que las contraseñas se guarden cifradas (nadie, ni el programador, puede ver la clave real).",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "LOG-03",
-                    title: "Motor de verificación de entrada (Correo + Contraseña)",
-                    desc: "Conectar la pantalla con el servidor: revisar que el correo exista, comprobar la clave cifrada y mostrar avisos si se equivocó.",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "LOG-04",
-                    title: "Gafete digital de sesión activa y cierre por inactividad",
-                    desc: "Crear el pase de seguridad para que no le pida contraseña en cada clic, y cerrar su sesión sola si deja la computadora abandonada.",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "LOG-05",
-                    title: "Semáforo de redirección y bloqueo por Rol (Admin / Proveedor / Cliente)",
-                    desc: "Lógica que detecta quién acaba de entrar y lo manda a su pantalla correcta, impidiendo que un proveedor entre a la vista de un cliente.",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "LOG-06",
-                    title: "Candado anti-hackeo (Bloqueo tras 5 intentos fallidos)",
-                    desc: "Si alguien intenta adivinar una contraseña y falla 5 veces seguidas, el sistema congela esa cuenta por 15 minutos por seguridad.",
-                    hours: 3,
-                    tier: "rec"
-                },
-                {
-                    id: "LOG-07",
-                    title: "Pantalla visual de '¿Olvidaste tu contraseña?'",
-                    desc: "Dos pantallas adicionales: una para escribir el correo a recuperar y otra donde el usuario escribe y confirma su contraseña nueva.",
-                    hours: 2,
-                    tier: "rec"
-                },
-                {
-                    id: "LOG-08",
-                    title: "Envío automático de correo con enlace temporal de recuperación",
-                    desc: "Conectar un servidor de correos que genere un código único con validez de 15 minutos y lo envíe al instante al usuario que olvidó su clave.",
-                    hours: 6,
-                    tier: "rec"
-                }
+                { id: "LOG-01", title: "Diseño visual de la ventana de Login (Responsive)", desc: "Maquetar la pantalla con identidad Cosiam, campos seguros y adaptación impecable a móviles y computadoras.", hours: 4, tier: "mvp" },
+                { id: "LOG-02", title: "Bóveda de usuarios y encriptación robusta de claves", desc: "Estructura de base de datos cifrada para proteger las contraseñas con estándares de seguridad.", hours: 6, tier: "mvp" },
+                { id: "LOG-03", title: "Motor de autenticación y validación en servidor", desc: "Procesar peticiones de entrada, verificar credenciales y gestionar tokens de sesión segura.", hours: 6, tier: "mvp" },
+                { id: "LOG-04", title: "Gafete digital de sesión y expiración automática", desc: "Control de caducidad de sesión para proteger el acceso si una computadora se queda sin supervisión.", hours: 5, tier: "mvp" },
+                { id: "LOG-05", title: "Semáforo de redirección y permisos por Rol", desc: "Reglas estrictas en backend para separar vistas de Administrador, Proveedor y Clientes.", hours: 6, tier: "mvp" },
+                { id: "LOG-06", title: "Candado anti-fuerza bruta (Bloqueo temporal)", desc: "Congelar temporalmente cuentas tras múltiples intentos fallidos de acceso.", hours: 5, tier: "rec" },
+                { id: "LOG-07", title: "Pantalla y flujo de recuperación de contraseña", desc: "Interfaces para solicitar restablecimiento de clave mediante enlace cifrado.", hours: 5, tier: "rec" },
+                { id: "LOG-08", title: "Robot de envío de correos automáticos (Recuperación)", desc: "Conexión SMTP para despacho inmediato de correos con tokens de un solo uso y caducidad.", hours: 8, tier: "rec" }
             ]
         },
         {
-            category: "Módulo 2: Panel de Administrador (Control Interno de Cosiam)",
+            category: "Módulo 2: Panel de Administrador (Control Interno Cosiam)",
             items: [
-                {
-                    id: "ADM-01",
-                    title: "Formulario para registrar nuevos Clientes y Proveedores",
-                    desc: "Pantalla donde Cosiam da de alta una empresa nueva (ej. Toyota), asigna su correo de acceso, su contraseña inicial y sube su logotipo.",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "ADM-02",
-                    title: "Directorio de usuarios con interruptor 'Suspender / Activar'",
-                    desc: "Lista de todas las cuentas creadas con un botón para cortar el acceso en 1 segundo si un cliente o proveedor deja de trabajar con Cosiam.",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "ADM-03",
-                    title: "Reseteo manual de contraseña por parte del Administrador",
-                    desc: "Botón rápido para que desde las oficinas de Cosiam puedan cambiarle la contraseña a un cliente si llama por teléfono pidiendo apoyo.",
-                    hours: 2,
-                    tier: "mvp"
-                },
-                {
-                    id: "ADM-04",
-                    title: "Publicador de Cotizaciones Nuevas asignadas por Cliente",
-                    desc: "Formulario para elegir al cliente (ej. Toyota), escribir folio, descripción del servicio, monto total y adjuntar el archivo PDF de la propuesta.",
-                    hours: 6,
-                    tier: "mvp"
-                },
-                {
-                    id: "ADM-05",
-                    title: "Editor de cotizaciones publicadas (Actualizar precios o PDF)",
-                    desc: "Poder modificar una cotización que ya se había subido (cambiar un costo o reemplazar el archivo PDF) sin tener que borrarla.",
-                    hours: 4,
-                    tier: "rec"
-                },
-                {
-                    id: "ADM-06",
-                    title: "Control de estatus de cotización y mantenimiento",
-                    desc: "Selector para cambiar una propuesta entre: 'En Revisión', 'Aprobada', 'Mantenimiento en Proceso' o 'Servicio Concluido'.",
-                    hours: 3,
-                    tier: "mvp"
-                },
-                {
-                    id: "ADM-07",
-                    title: "Panel para actualizar información y costos para Proveedores",
-                    desc: "Pantalla donde el administrador de Cosiam publica qué refacciones se buscan, precios de referencia o avisos operativos para proveedores.",
-                    hours: 4,
-                    tier: "mvp"
-                }
+                { id: "ADM-01", title: "Gestor de altas para Clientes y Proveedores", desc: "Formularios de registro de cuentas corporativas, asignación de credenciales y logotipos.", hours: 6, tier: "mvp" },
+                { id: "ADM-02", title: "Directorio de usuarios con estatus Activo / Suspendido", desc: "Panel de control para habilitar o cortar accesos de forma instantánea.", hours: 5, tier: "mvp" },
+                { id: "ADM-03", title: "Herramienta de reseteo manual de claves", desc: "Acceso interno para que soporte técnico auxilie a clientes vía telefónica.", hours: 3, tier: "mvp" },
+                { id: "ADM-04", title: "Publicador dinámico de Cotizaciones y PDFs", desc: "Formulario para cargar folios, importes, asociar clientes y almacenar archivos PDF adjuntos.", hours: 8, tier: "mvp" },
+                { id: "ADM-05", title: "Editor de propuestas publicadas (Modificación y reemplazo)", desc: "Capacidad de actualizar montos o sustituir documentos vigentes sin alterar la estructura.", hours: 6, tier: "rec" },
+                { id: "ADM-06", title: "Gestor de estatus operativos de mantenimiento", desc: "Control de etapas (Programado, En Revisión, Concluido) reflejado en tiempo real.", hours: 5, tier: "mvp" },
+                { id: "ADM-07", title: "Tablero de requerimientos para Proveedores", desc: "Publicación de avisos de refacciones y listas de referencia para socios comerciales.", hours: 5, tier: "mvp" }
             ]
         },
         {
             category: "Módulo 3: Portal Dinámico del Cliente (Ej. Toyota / CBRE)",
             items: [
-                {
-                    id: "CLI-01",
-                    title: "Portada dinámica personalizada según el cliente que entra",
-                    desc: "En vez de hacer una página por cliente, una sola plantilla inteligente carga el nombre, colores y logo de Toyota (o del cliente que inicie sesión).",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "CLI-02",
-                    title: "Candado de aislamiento de datos entre clientes",
-                    desc: "Regla de seguridad en el servidor para garantizar al 100% que Toyota jamás pueda ver cotizaciones ni precios de otro cliente.",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "CLI-03",
-                    title: "Tabla de Cotizaciones del Cliente con estatus en vivo",
-                    desc: "Listado donde el cliente ve todas sus propuestas recibidas, fecha, monto y en qué etapa se encuentran actualmente.",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "CLI-04",
-                    title: "Visor de PDF integrado dentro de la página",
-                    desc: "Ventana igual a la propuesta de Toyota/CBRE para que el cliente lea el documento PDF directo en pantalla sin tener que descargarlo.",
-                    hours: 3,
-                    tier: "mvp"
-                },
-                {
-                    id: "CLI-05",
-                    title: "Buscador de cotizaciones por folio, fecha o palabra clave",
-                    desc: "Barra de búsqueda para que cuando el cliente tenga 50 cotizaciones acumuladas, encuentre la que busca en 2 segundos.",
-                    hours: 3,
-                    tier: "rec"
-                },
-                {
-                    id: "CLI-06",
-                    title: "Botón interactivo de 'Aprobar Cotización' o 'Pedir Ajuste'",
-                    desc: "Permitir que el cliente autorice la propuesta desde su pantalla con un clic y deje un comentario escrito para Cosiam.",
-                    hours: 6,
-                    tier: "rec"
-                },
-                {
-                    id: "CLI-07",
-                    title: "Bitácora de Equipos de Cocina Industrial del Cliente",
-                    desc: "Apartado especial donde el cliente consulta sus equipos registrados (hornos, refrigeradores, lavavajillas) y cuándo les toca mantenimiento.",
-                    hours: 8,
-                    tier: "full"
-                }
+                { id: "CLI-01", title: "Plantilla adaptable de branding por cliente", desc: "Carga dinámica de identidad visual y datos corporativos según la cuenta autenticada.", hours: 6, tier: "mvp" },
+                { id: "CLI-02", title: "Aislamiento estricto de datos (Multi-tenant security)", desc: "Filtros a nivel base de datos que blindan la información para que ningún cliente vea datos ajenos.", hours: 6, tier: "mvp" },
+                { id: "CLI-03", title: "Tabla interactiva de cotizaciones activas e historiales", desc: "Listado filtrable de propuestas con montos y estatus de servicio.", hours: 6, tier: "mvp" },
+                { id: "CLI-04", title: "Visor de documentos PDF incrustado", desc: "Reproductor web integrado para lectura directa de propuestas técnicas.", hours: 5, tier: "mvp" },
+                { id: "CLI-05", title: "Buscador avanzado y filtros por fecha / folio", desc: "Herramienta de localización rápida para catálogos extensos de cotizaciones.", hours: 4, tier: "rec" },
+                { id: "CLI-06", title: "Módulo de aprobación y retroalimentación de propuestas", desc: "Botones de autorización de presupuestos con registro de observaciones del cliente.", hours: 8, tier: "rec" },
+                { id: "CLI-07", title: "Historial y Ficha Técnica de Equipos de Cocina", desc: "Inventario de equipos industriales con fechas de mantenimiento e informes previos.", hours: 10, tier: "full" }
             ]
         },
         {
-            category: "Módulo 4: Portal de Proveedores",
+            category: "Módulo 4: Portal de Proveedores e Inventario de Refacciones",
             items: [
-                {
-                    id: "PRV-01",
-                    title: "Pantalla de información corporativa y requisitos de Cosiam",
-                    desc: "Vista exclusiva para proveedores con políticas de compra, datos de facturación y lineamientos de entrega de Grupo Cosiam.",
-                    hours: 3,
-                    tier: "mvp"
-                },
-                {
-                    id: "PRV-02",
-                    title: "Tabla de costos de referencia y refacciones requeridas",
-                    desc: "Sección donde el proveedor visualiza los insumos o mantenimientos que Cosiam necesita cotizar o surtir.",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "PRV-03",
-                    title: "Buzón para que el proveedor suba su lista de precios o propuesta",
-                    desc: "Formulario donde el proveedor puede enviarle a Cosiam sus costos actualizados o adjuntar su catálogo en PDF.",
-                    hours: 6,
-                    tier: "full"
-                }
+                { id: "PRV-01", title: "Sección de lineamientos operativos y normativos", desc: "Visualización de políticas de compra, datos de facturación y requerimientos de Cosiam.", hours: 4, tier: "mvp" },
+                { id: "PRV-02", title: "Consulta de insumos y refacciones solicitadas", desc: "Listado de requerimientos técnicos vigentes para cotización de proveedores.", hours: 5, tier: "mvp" },
+                { id: "PRV-03", title: "Buzón de carga de propuestas de suministro", desc: "Interfaz para recepción de listas de precios y cotizaciones externas de insumos.", hours: 8, tier: "full" },
+                { id: "PRV-04", title: "Control de Inventario y Refacciones por Cliente", desc: "Módulo para rastrear stock de refacciones críticas asignadas a cada planta industrial.", hours: 10, tier: "full" }
             ]
         },
         {
-            category: "Módulo 5: Bitácora (Logs) y Avisos Automáticos",
+            category: "Módulo 5: Bitácora (Logs), Auditoría y Reportes de Servicio",
             items: [
-                {
-                    id: "AUD-01",
-                    title: "Grabadora automática de inicios de sesión (Logs de acceso)",
-                    desc: "Guardar en la libreta del sistema cada vez que alguien entra: usuario, fecha, hora exacta y desde qué dispositivo entró.",
-                    hours: 4,
-                    tier: "rec"
-                },
-                {
-                    id: "AUD-02",
-                    title: "Grabadora de movimientos (Quién subió, editó o aprobó algo)",
-                    desc: "Registrar con nombre y hora cada vez que se crea una cotización, se modifica un costo o un cliente aprueba un presupuesto.",
-                    hours: 4,
-                    tier: "rec"
-                },
-                {
-                    id: "AUD-03",
-                    title: "Pantalla de Auditoría para Dirección de Cosiam",
-                    desc: "Tabla visual dentro del panel de administrador para que los jefes puedan revisar el historial de quién hizo qué y cuándo.",
-                    hours: 5,
-                    tier: "rec"
-                },
-                {
-                    id: "AUD-04",
-                    title: "Alertas automáticas por correo electrónico",
-                    desc: "Enviar un correo automático a Toyota cuando Cosiam le suba una cotización nueva, y un correo a Cosiam cuando el cliente la apruebe.",
-                    hours: 6,
-                    tier: "full"
-                }
+                { id: "AUD-01", title: "Registro automático de accesos al sistema", desc: "Guardar bitácora inalterable de cada inicio de sesión con marca de tiempo e IP.", hours: 5, tier: "rec" },
+                { id: "AUD-02", title: "Auditoría de operaciones críticas (Creación/Edición)", desc: "Monitoreo de qué usuario generó, modificó o aprobó una cotización.", hours: 6, tier: "rec" },
+                { id: "AUD-03", title: "Visor gerencial de bitácoras para Dirección", desc: "Panel de consulta con filtros de búsqueda para supervisión administrativa.", hours: 6, tier: "rec" },
+                { id: "AUD-04", title: "Generador y Visor de Reportes de Servicio Digitales", desc: "Módulo para emitir, firmar digitalmente y consultar reportes de mantenimiento en campo.", hours: 12, tier: "full" }
             ]
         },
         {
-            category: "Módulo 6: Servidor 24/7, Base de Datos y Respaldos",
+            category: "Módulo 6: Automatización en WhatsApp Business",
             items: [
-                {
-                    id: "INF-01",
-                    title: "Diseño y programación de la Base de Datos central",
-                    desc: "Construir los cimientos donde se conectan los usuarios, los clientes, las cotizaciones, los costos y la bitácora sin mezclarse.",
-                    hours: 6,
-                    tier: "mvp"
-                },
-                {
-                    id: "INF-02",
-                    title: "Bodega segura para archivos PDF y logotipos",
-                    desc: "Configurar el sistema que recibe, valida y guarda los archivos PDF en el servidor para que carguen rápido y seguros.",
-                    hours: 4,
-                    tier: "mvp"
-                },
-                {
-                    id: "INF-03",
-                    title: "Puesta en marcha en Servidor en la Nube (VPS) y Candado HTTPS",
-                    desc: "Configurar el servidor Linux 24/7, conectar el dominio de Cosiam y activar el certificado de seguridad SSL.",
-                    hours: 6,
-                    tier: "mvp"
-                },
-                {
-                    id: "INF-04",
-                    title: "Programación de Respaldos Automáticos Nocturnos (Backups)",
-                    desc: "Dejar programada la copia de seguridad automática todas las noches para proteger la información ante cualquier imprevisto.",
-                    hours: 3,
-                    tier: "rec"
-                }
+                { id: "WA-01", title: "Conexión con API de WhatsApp Business (Meta Cloud API)", desc: "Configuración del canal de comunicación oficial para envío y recepción de mensajes automáticos.", hours: 8, tier: "rec" },
+                { id: "WA-02", title: "Robot de notificaciones de cotizaciones nuevas", desc: "Envío automático de alertas por WhatsApp al cliente cuando Cosiam sube una propuesta.", hours: 6, tier: "rec" },
+                { id: "WA-03", title: "Bot de aprobación rápida de presupuestos por chat", desc: "Permitir que el cliente responda comandos rápidos (ej. aprobar) para actualizar el sistema.", hours: 10, tier: "full" }
+            ]
+        },
+        {
+            category: "Módulo 7: Videos Interactivos Generados con IA",
+            items: [
+                { id: "AI-01", title: "Integración de reproductor multimedia inteligente", desc: "Estructura web para alojar y reproducir contenidos audiovisuales institucionales y tutoriales.", hours: 4, tier: "rec" },
+                { id: "AI-02", title: "Conexión con generadores de video por IA (Avatares y voz)", desc: "Automatización de guiones para crear explicaciones de propuestas personalizadas con avatares virtuales.", hours: 10, tier: "full" }
+            ]
+        },
+        {
+            category: "Módulo 8: Servidor 24/7, Base de Datos y Modelado 3D",
+            items: [
+                { id: "INF-01", title: "Diseño y normalización de la Base de Datos relacional", desc: "Estructuración de tablas para usuarios, permisos, catálogos y transacciones.", hours: 8, tier: "mvp" },
+                { id: "INF-02", title: "Gestor de almacenamiento y seguridad para archivos PDF", desc: "Controlador de subida y validación de documentos adjuntos en servidor.", hours: 6, tier: "mvp" },
+                { id: "INF-03", title: "Despliegue en Servidor Cloud (VPS) y Certificado SSL", desc: "Configuración de entorno de producción 24/7, dominio y candado de seguridad HTTPS.", hours: 8, tier: "mvp" },
+                { id: "INF-04", title: "Automatización de copias de respaldo (Backups)", desc: "Programación de respaldos periódicos inmutables para protección de datos.", hours: 5, tier: "rec" },
+                { id: "3D-01", title: "Integración del motor 3D interactivo en la plataforma", desc: "Montaje del visor web (model-viewer) con controles de órbita, zoom y luces.", hours: 6, tier: "rec" },
+                { id: "3D-02", title: "Modelado geométrico de equipos de cocina industrial", desc: "Construcción 3D detallada de componentes (ej. hornos o equipos iVario).", hours: 12, tier: "full" },
+                { id: "3D-03", title: "Texturizado PBR realista (Acero inoxidable y acabados)", desc: "Aplicación de materiales físicos avanzados para realismo visual.", hours: 8, tier: "full" },
+                { id: "3D-04", title: "Optimización de geometría y exportación ligera (.GLB)", desc: "Reducción de peso y polígonos para asegurar fluidez de carga en navegadores.", hours: 6, tier: "full" }
             ]
         }
     ];
@@ -347,14 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedFeatures = new Set();
     let totalFeatureItems = 0;
 
-    // Convierte horas en dibujos de Soles y Relojes para cada tarjeta individual
     function getVisualCoinsForTask(hours) {
         const suns = Math.floor(hours / HOURS_PER_DAY);
         const clocks = hours % HOURS_PER_DAY;
         return '☀️'.repeat(suns) + '⏱️'.repeat(clocks);
     }
 
-    // Texto explicativo debajo de los íconos de cada tarjeta
     function getTextEquivalent(hours) {
         const suns = Math.floor(hours / HOURS_PER_DAY);
         const clocks = hours % HOURS_PER_DAY;
@@ -372,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const block = document.createElement('div');
             block.className = 'baf-category-block';
 
-            // Calcular subtotal de horas seleccionadas en este módulo
             let moduleSelectedHours = 0;
             let moduleTotalHours = 0;
             group.items.forEach(item => {
@@ -503,7 +322,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tokensContainer.innerHTML = tokensHTML;
     }
 
-    // Botón 1: Solo lo mínimo indispensable (MVP)
     document.getElementById('btn-select-mvp').addEventListener('click', () => {
         selectedFeatures.clear();
         featuresCatalog.forEach(group => {
@@ -515,7 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSummary();
     });
 
-    // Botón 2: Paquete Recomendado Cosiam (MVP + Recuperar contraseñas + Bitácora + Respaldos)
     const btnRec = document.getElementById('btn-select-rec');
     if (btnRec) {
         btnRec.addEventListener('click', () => {
@@ -532,7 +349,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Botón 3: Todo el proyecto completo (las 33 micro-tareas)
     document.getElementById('btn-select-all').addEventListener('click', () => {
         featuresCatalog.forEach(group => {
             group.items.forEach(item => selectedFeatures.add(item.id));
@@ -541,14 +357,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSummary();
     });
 
-    // Botón 4: Limpiar todo
     document.getElementById('btn-clear-all').addEventListener('click', () => {
         selectedFeatures.clear();
         renderCatalog();
         updateSummary();
     });
 
-    // Iniciar por defecto con el Paquete Recomendado para que vean un alcance sólido
     featuresCatalog.forEach(group => {
         group.items.forEach(item => {
             if (item.tier === 'mvp' || item.tier === 'rec') {

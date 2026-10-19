@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grupo Cosiam | Presentación Proyecto Aplicación Web</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 </head>
 <body>
 
@@ -26,12 +27,15 @@
             <nav id="main-nav">
                 <ul>
                     <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+                    <li><a href="#mapa-mental" class="nav-link">Arquitectura</a></li>
                     <li><a href="#preguntas" class="nav-link">Preguntas</a></li>
                     <li><a href="#objetivo" class="nav-link">Objetivo</a></li>
                     <li><a href="#servidor" class="nav-link">Conceptos</a></li>
                     <li><a href="#estatica-vs-dinamica" class="nav-link">Estática vs Dinámica</a></li>
                     <li><a href="#costos" class="nav-link">Inversión ($)</a></li>
                     <li><a href="#buy-a-feature" class="nav-link">Tiempo (Buy a Feature)</a></li>
+                    <!-- NUEVO ENLACE AQUÍ -->
+                    <li><a href="#modelado-3d" class="nav-link">Modelado 3D</a></li>
                     <li><a href="#cierre" class="nav-link">Decisión Final</a></li>
                 </ul>
             </nav>
@@ -47,6 +51,22 @@
             <a href="#preguntas" class="btn-primary">Iniciar Presentación</a>
         </div>
     </section>
+
+    <!-- ================= SECCIÓN 1.2: MAPA MENTAL TÉCNICO (NUEVA POSICIÓN) ================= -->
+    <div class="section-alt">
+        <section id="mapa-mental" class="section-wrapper">
+            <div class="section-header reveal">
+                <span class="section-step">Sección 02 • Profundización Técnica</span>
+                <h3>Arquitectura del Proyecto</h3>
+                <p>Explora de forma interactiva el ecosistema de tecnologías, infraestructura y ciberseguridad que respalda la construcción de este tipo de plataformas.</p>
+            </div>
+
+            <div class="iframe-container reveal">
+                <!-- Asegúrate de que el nombre del archivo coincida exactamente -->
+                <iframe src="mapa_mental_ingenier_a_en_software_y_sistemas_computacionales.html" title="Mapa Mental Interactivo" loading="lazy"></iframe>
+            </div>
+        </section>
+    </div>
 
     <!-- ================= SECCIÓN 2: PREGUNTAS CLAVE ================= -->
     <section id="preguntas" class="section-wrapper">
@@ -316,117 +336,112 @@
     <!-- ================= SECCIÓN 10: COSTOS E INFRAESTRUCTURA DETALLADA ================= -->
     <section id="costos" class="section-wrapper">
         <div class="section-header reveal">
-            <span class="section-step">Sección 10 • Presupuesto y Detalles Técnicos</span>
-            <h3>¿Cuánto están dispuestos a gastar?</h3>
-            <p>Desglose transparente de cuánto cuesta mantener el sistema encendido 24/7, qué viene incluido y qué se paga por separado.</p>
+            <span class="section-step">Sección 10 • Presupuesto, Opciones, Dominio y Escalabilidad</span>
+            <h3>¿Cuánto están dispuestos a gastar y cómo escala el costo?</h3>
+            <p>Opciones independientes de inversión, análisis sobre el dominio web y comportamiento financiero conforme la empresa crece.</p>
         </div>
 
-        <!-- Aviso de Escalabilidad Realista -->
+        <!-- Aviso de Escalabilidad y Costos -->
         <div class="cost-warning-box reveal">
-            <h4>⚠️ Aviso importante sobre la Escalabilidad y el tamaño de Cosiam</h4>
-            <p>Muchas veces se piensa que estar en <strong>Amazon Web Services (AWS)</strong> cuesta miles de pesos al mes. Eso solo le pasa a bancos o tiendas masivas donde entran <strong>50,000 personas al mismo minuto</strong> y necesitan que el servidor crezca solo (escalabilidad automática).</p>
-            <p><strong>La realidad operativa de Cosiam:</strong> Nuestro sistema es de uso empresarial e industrial. Entrarán nuestros clientes (como Toyota o CBRE), nuestros proveedores y los administradores de Cosiam. No van a entrar miles de personas por segundo; por lo tanto, <strong>no conviene pagar el esquema caro y variable de AWS EC2</strong>. Nos conviene un servidor privado de cuota fija mensual.</p>
+            <h4>⚠️ ¿Cómo funciona la "Escalabilidad en los Costos"?</h4>
+            <p>En tecnología, el crecimiento de una empresa puede afectar el presupuesto de dos formas distintas:</p>
+            <p>1. <strong>Costo Variable / Elástico (El riesgo de las nubes corporativas):</strong> Modelos como AWS EC2 tradicional te cobran por cada clic, por cada gigabyte descargado y por las horas exactas de procesamiento. Si un mes Cosiam atiende el doble de proyectos y los clientes entran constantemente al portal, <strong>la factura de Amazon sube de forma impredecible</strong>.</p>
+            <p>2. <strong>Costo Fijo / Tarifa Plana (Nuestra propuesta con VPS):</strong> Pagas una renta mensual estricta ($140 - $280 MXN). Si este mes entran 5 clientes o entran 50 a revisar sus cotizaciones, <strong>el costo para Cosiam sigue siendo exactamente el mismo</strong>. El costo solo cambia de nivel de forma manual y controlada cuando la empresa requiera más capacidad en el futuro.</p>
         </div>
 
-        <!-- Explicación rápida: Qué es cada gasto (Terreno vs Letrero) -->
+        <!-- Desglose Rápido de Componentes -->
         <div class="anatomy-grid reveal">
             <div class="anatomy-card">
-                <span class="anatomy-badge badge-Separate">Se Renta por Mes</span>
-                <h5>1. El Servidor (El Local / La Cocina)</h5>
-                <p>Es la computadora en la nube encendida 24/7. Al rentarla, el proveedor solo nos da un número de identificación (Dirección IP, ej. <em>54.210.18.90</em>). <strong>No incluye el nombre ".com"</strong>.</p>
+                <span class="anatomy-badge badge-Separate">Costo Fijo Predictible</span>
+                <h5>1. Servidor VPS (AWS Lightsail)</h5>
+                <p>Tarifa plana mensual de <strong>$140 a $280 MXN</strong>. Cero sorpresas financieras por exceso de tráfico operativo en el portal.</p>
             </div>
 
             <div class="anatomy-card">
-                <span class="anatomy-badge badge-Separate">Se Paga 1 Vez al Año (o Gratis)</span>
-                <h5>2. El Dominio Web (El Letrero con Dirección)</h5>
-                <p>Para no entrar escribiendo números raros, se compra un nombre como <em>portalcosiam.com</em> (<strong>$300 a $550 MXN al año</strong>). <br><strong>Nota clave:</strong> Si Cosiam ya tiene dominio para sus correos, podemos crear <strong>gratis</strong> un subdominio como <em>portal.cosiam.com.mx</em>.</p>
+                <span class="anatomy-badge badge-Separate">Decisión de Dominio</span>
+                <h5>2. El Nombre en Internet (¿Dominio actual u otro?)</h5>
+                <p>Si se usa un <strong>dominio nuevo</strong>, cuesta ~$400 MXN al año. Si prefieren usar el <strong>dominio actual de Cosiam</strong>, podemos crear un subdominio profesional (ej. <em>portal.grupocosiam.com</em>) totalmente <strong>GRATIS ($0 MXN)</strong>.</p>
             </div>
 
             <div class="anatomy-card">
-                <span class="anatomy-badge badge-Included">Costo $0 MXN (Incluido)</span>
-                <h5>3. Candado de Seguridad (HTTPS) y Base de Datos</h5>
-                <p>El candadito verde de seguridad para proteger contraseñas y el programa para guardar la base de datos se instalan dentro del mismo servidor <strong>sin costo mensual adicional</strong>.</p>
+                <span class="anatomy-badge badge-Included">Desarrollo y Chat</span>
+                <h5>3. IA (Desarrollo) y WhatsApp (Meta)</h5>
+                <p>Herramientas de asistencia por IA para programar más rápido (~$350-$400/mes) y la API de WhatsApp con pago por mensaje real enviado (~$60-$200/mes).</p>
             </div>
         </div>
 
-        <!-- TABLA COMPARATIVA EJECUTIVA -->
+        <!-- TABLA COMPARATIVA CON OPCIONES SEPARADAS Y ESCALABILIDAD DE COSTOS -->
         <div class="table-container reveal">
-            <h4 class="table-main-title">Tabla Comparativa: ¿Qué opción le conviene más a Grupo Cosiam?</h4>
-            <p class="table-subtitle">Comparativa entre un Servidor Privado Virtual (VPS / AWS Lightsail) contra un servidor tradicional de Amazon (AWS EC2) y una computadora en la oficina.</p>
+            <h4 class="table-main-title">Tabla Comparativa y Comportamiento de Costos</h4>
+            <p class="table-subtitle">Elige entre las diferentes combinaciones analizando cómo se comportará el dinero conforme Cosiam crece.</p>
 
             <div class="table-responsive">
                 <table class="cost-comparison-table">
                     <thead>
                         <tr>
-                            <th>Concepto / Detalle</th>
+                            <th>Concepto / Paquete</th>
                             <th class="col-recommended">
-                                ⭐ Opción 1: Servidor VPS / AWS Lightsail<br>
-                                <span class="th-badge">Recomendado para Cosiam</span>
+                                🌟 Opción A: Solo Servidor VPS<br>
+                                <span class="th-badge">Infraestructura Base</span>
                             </th>
                             <th>
-                                Opción 2: AWS EC2 + RDS<br>
-                                <span class="th-sub">Esquema Corporativo Separado</span>
+                                🤖 Opción B: Servidor VPS + IA<br>
+                                <span class="th-sub">Para Acelerar Desarrollo</span>
+                            </th>
+                            <th class="col-recommended">
+                                📱 Opción C: VPS + IA + WhatsApp<br>
+                                <span class="th-badge">Sistema Completo + Chat</span>
                             </th>
                             <th>
-                                Opción 3: Computadora en Oficina<br>
-                                <span class="th-sub">Servidor Físico Propio</span>
+                                ☁️ Opción D: AWS EC2 + RDS<br>
+                                <span class="th-sub">Corporativo Tradicional</span>
+                            </th>
+                            <th>
+                                🖥️ Opción E: Computadora Oficina<br>
+                                <span class="th-sub">Servidor Físico Local</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>¿Qué es en palabras sencillas?</strong></td>
-                            <td class="col-recommended">Rentar un departamento ejecutivo con todos los servicios incluidos en una sola renta fija mensual.</td>
-                            <td>Rentar un edificio donde te cobran por separado el cuarto, el archivero, la luz y cada persona que entra.</td>
-                            <td>Comprar una computadora potente y dejarla prendida día y noche en la oficina de Cosiam.</td>
+                            <td><strong>¿Cómo escala el costo mes a mes?</strong></td>
+                            <td class="col-recommended"><strong>Estable y Fijo.</strong> Pagas lo mismo aunque el uso del portal aumente considerablemente.</td>
+                            <td><strong>Fijo en infraestructura + IA temporal.</strong> Las herramientas de IA se pagan solo los meses que programes.</td>
+                            <td class="col-recommended"><strong>Fijo + Variable mínimo.</strong> Servidor fijo e IA estables, con un costo por mensaje de WhatsApp que sube solo si envías más alertas.</td>
+                            <td><strong>100% Variable e impredecible.</strong> Sube dinámicamente según el tráfico, descargas y consultas a base de datos.</td>
+                            <td><strong>Fijo en servicios locales,</strong> pero con riesgo alto de costos ocultos por fallas de hardware.</td>
                         </tr>
                         <tr>
                             <td><strong>Costo Mensual Estimado</strong></td>
-                            <td class="col-recommended"><strong class="price-highlight">$140 a $280 MXN / mes</strong><br><small>($7 a $14 USD fijos al mes)</small></td>
-                            <td><strong>$700 a $1,500+ MXN / mes</strong><br><small>($35 a $75+ USD variables al mes)</small></td>
-                            <td><strong>$15,000+ MXN pago inicial</strong><br><small>+ Recibo de luz e internet empresarial</small></td>
+                            <td class="col-recommended"><strong class="price-highlight">$140 - $280 MXN / mes</strong></td>
+                            <td><strong>$490 - $680 MXN / mes</strong></td>
+                            <td class="col-recommended"><strong class="price-highlight">$550 - $880 MXN / mes</strong></td>
+                            <td><strong>$1,050 - $1,850+ MXN / mes</strong><br><small>(Riesgo de picos en factura)</small></td>
+                            <td><strong>$15,000+ MXN iniciales</strong><br><small>+ Operación local</small></td>
                         </tr>
                         <tr>
-                            <td><strong>¿El precio sube si entran muchos clientes?</strong></td>
-                            <td class="col-recommended"><strong>No.</strong> Es tarifa plana fija. Sabes exactamente cuánto vas a pagar todo el año.</td>
-                            <td><strong>Sí.</strong> Cobra por hora de uso, por gigabyte descargado y por movimiento de datos.</td>
-                            <td>No, pero si entran varios al mismo tiempo el internet de la oficina se vuelve lento.</td>
+                            <td><strong>Estrategia de Dominio Web (.com / .com.mx)</strong></td>
+                            <td class="col-recommended"><strong>A elegir:</strong><br><small>• Gratis ($0) con subdominio actual de Cosiam.<br>• O ~$400/año comprando uno nuevo.</small></td>
+                            <td><strong>A elegir:</strong><br><small>• Gratis con dominio actual.<br>• O ~$400/año si prefieren uno nuevo.</small></td>
+                            <td class="col-recommended"><strong>A elegir:</strong><br><small>• Gratis con dominio actual.<br>• O ~$400/año si prefieren uno nuevo.</small></td>
+                            <td>Dominio se compra aparte en Amazon Route 53 (~$350-$550/año).</td>
+                            <td>Requiere contratar IP Fija costosa con proveedor de internet local.</td>
                         </tr>
                         <tr>
-                            <td><strong>¿Incluye el Dominio (.com / .com.mx)?</strong></td>
-                            <td class="col-recommended"><strong>No viene incluido.</strong><br><small>Cuesta ~$400 MXN al año aparte (o <strong>$0 MXN</strong> usando subdominio de Cosiam).</small></td>
-                            <td><strong>No viene incluido.</strong><br><small>Se compra aparte en Amazon Route 53 (~$350 a $550 MXN al año).</small></td>
-                            <td><strong>No viene incluido.</strong><br><small>Además requiere contratar una "IP Fija" cara con Telmex/Totalplay.</small></td>
+                            <td><strong>¿Qué pasa si Cosiam duplica sus clientes en 1 año? (Escalabilidad)</strong></td>
+                            <td class="col-recommended">El servidor resiste. Si en el futuro se requiere más potencia, se migra de plan con un solo clic de forma manual.</td>
+                            <td>El servidor resiste igual. Las herramientas de IA ya no se requerirán de forma constante una vez liberado el sistema.</td>
+                            <td class="col-recommended">El servidor resistirá sin problema. El costo de WhatsApp subirá proporcionalmente solo por el envío de más avisos a clientes.</td>
+                            <td>La factura de Amazon subirá automáticamente de forma proporcional a los accesos y uso de bases de datos.</td>
+                            <td>La computadora de la oficina se volverá lenta y requerirá comprar hardware nuevo y más costoso.</td>
                         </tr>
                         <tr>
-                            <td><strong>Base de Datos (Donde se guardan cotizaciones)</strong></td>
-                            <td class="col-recommended"><strong>Incluida ($0 extra).</strong><br><small>Se instala dentro del mismo servidor o se usa MongoDB Atlas gratuito.</small></td>
-                            <td><strong>Se cobra aparte (AWS RDS).</strong><br><small>Tener la base de datos separada suma unos ~$350 MXN extra al mes.</small></td>
-                            <td><strong>Incluida ($0 extra).</strong><br><small>Se instala en el disco duro de la misma computadora.</small></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Espacio para guardar PDFs y Fotos</strong></td>
-                            <td class="col-recommended"><strong>40 GB a 60 GB incluidos.</strong><br><small>Espacio suficiente para guardar más de 25,000 cotizaciones en PDF.</small></td>
-                            <td><strong>Se cobra por cada GB (AWS S3).</strong><br><small>Pagas centavos de dólar por cada archivo guardado y cada vez que alguien lo abre.</small></td>
-                            <td>Depende del disco duro que se compre en la oficina.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Respaldos Automáticos (Backups)</strong></td>
-                            <td class="col-recommended"><strong>+$30 a $55 MXN / mes.</strong><br><small>Se activa con una casilla y guarda copias semanales/diarias.</small></td>
-                            <td><strong>+$80 a $200 MXN / mes.</strong><br><small>Se cobra según el tamaño total de los archivos respaldados.</small></td>
-                            <td><strong>Riesgo Alto.</strong><br><small>Si se daña el disco duro o roban el equipo, se pierde todo.</small></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Candado de Seguridad (HTTPS / SSL)</strong></td>
-                            <td class="col-recommended"><strong>Gratis ($0 MXN)</strong><br><small>Certificado renovable automático.</small></td>
-                            <td><strong>Gratis ($0 MXN)</strong><br><small>Certificado de Amazon.</small></td>
-                            <td>Complejo de configurar desde una red de oficina normal.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>¿Qué pasa si se va la luz en Cosiam?</strong></td>
-                            <td class="col-recommended"><strong>No pasa nada.</strong> Toyota y proveedores siguen entrando 24/7 sin interrupción.</td>
-                            <td><strong>No pasa nada.</strong> El sistema sigue encendido en los centros de Amazon.</td>
-                            <td><strong>El sistema se apaga por completo.</strong> Nadie puede entrar hasta que regrese la luz.</td>
+                            <td><strong>📊 GASTO TOTAL ESTIMADO AL AÑO</strong></td>
+                            <td class="col-recommended"><strong class="price-highlight">~$1,600 - $3,300 MXN / año</strong></td>
+                            <td><strong>~$5,800 - $8,100 MXN / año</strong></td>
+                            <td class="col-recommended"><strong class="price-highlight">~$6,600 - $10,500 MXN / año</strong></td>
+                            <td>~$15,000 - $24,000+ MXN / año</td>
+                            <td>~$16,500+ MXN al año</td>
                         </tr>
                     </tbody>
                 </table>
@@ -436,7 +451,7 @@
         <!-- Nota aclaratoria sobre VPS vs VPN -->
         <div class="vpn-note-box reveal">
             <strong>💡 Nota técnica rápida (¿VPS o VPN?):</strong> 
-            En esta tabla hablamos de un <strong>VPS (Servidor Privado Virtual)</strong>, que es la máquina donde vive alojada nuestra aplicación web. No debe confundirse con una <strong>VPN (Red Privada Virtual)</strong>, que es una herramienta distinta usada para conectar computadoras de forma remota. Para este proyecto de clientes y proveedores, lo que contrataremos es un <strong>VPS (como AWS Lightsail o DigitalOcean)</strong>.
+            En esta sección hablamos de un <strong>VPS (Servidor Privado Virtual)</strong>, que es la máquina en la nube donde vive nuestra aplicación web y los servicios de automatización. No debe confundirse con una <strong>VPN (Red Privada Virtual)</strong>, que es una herramienta distinta usada para conectar computadoras de forma remota. Para este proyecto, contrataremos un <strong>VPS (como AWS Lightsail o DigitalOcean)</strong>.
         </div>
     </section>
 
@@ -478,7 +493,7 @@
             <div class="feature-controls reveal">
                 <button type="button" class="btn-filter" id="btn-select-mvp">⚡ 1. Solo lo Mínimo para Arrancar (MVP)</button>
                 <button type="button" class="btn-filter btn-recommended-pack" id="btn-select-rec">🏢 2. Paquete Recomendado Cosiam</button>
-                <button type="button" class="btn-filter" id="btn-select-all">🚀 3. Todo el Sistema Completo (31 tareas)</button>
+                <button type="button" class="btn-filter" id="btn-select-all">🚀 3. Todo el Sistema Completo (46 tareas)</button>
                 <button type="button" class="btn-filter btn-clear" id="btn-clear-all">🗑️ Poner en Cero (Armar a mano)</button>
             </div>
 
@@ -520,6 +535,39 @@
                         </div>
                     </div>
                 </aside>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= SECCIÓN EXTRA: VISOR 3D (RATIONAL) ================= -->
+    <div class="section-alt">
+        <section id="modelado-3d" class="section-wrapper">
+            <div class="section-header reveal">
+                <span class="section-step">Innovación Visual</span>
+                <h3>Modelado 3D de Equipos (Ej. Hornos RATIONAL)</h3>
+                <p>Nuestra plataforma tiene la capacidad de integrar visores 3D en tiempo real. Esto permitiría a los clientes inspeccionar equipos de cocina industrial a detalle desde su navegador, sin instalar nada.</p>
+            </div>
+
+            <div class="concept-container reveal" style="grid-template-columns: 1fr;">
+                <div class="model-viewer-container" style="background: #1e293b; border-radius: 14px; padding: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
+                    <h4 style="color: #fbbf24; margin-bottom: 15px; font-size: 1.3rem;">Prueba de Concepto (Visor Interactivo)</h4>
+                    <p style="color: #cbd5e1; margin-bottom: 20px; font-size: 0.95rem;">Interactúa con el modelo: arrastra para rotar y usa la rueda del ratón para hacer zoom.</p>
+                    
+                    <!-- Etiqueta del modelo 3D -->
+                    <model-viewer src="Escudo.glb" alt="Modelo 3D de Prueba" 
+                        auto-rotate 
+                        camera-controls 
+                        shadow-intensity="1.5" 
+                        exposure="0.8"
+                        style="width: 100%; height: 500px; background-color: #0f172a; border-radius: 10px; outline: none;">
+                    </model-viewer>
+
+                    <div style="margin-top: 20px;">
+                        <span style="display: inline-block; background: #334155; color: #e2e8f0; padding: 8px 16px; border-radius: 5px; font-size: 0.9rem;">
+                            💡 En el futuro, aquí se mostrarán Hornos RATIONAL, estufas o equipos de refrigeración.
+                        </span>
+                    </div>
+                </div>
             </div>
         </section>
     </div>

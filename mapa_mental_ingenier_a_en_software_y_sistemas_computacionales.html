@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mapa Mental: Ingeniería en Software y Sistemas Computacionales</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+    body { background-color: #0b0f19; color: #f1f5f9; overflow-x: hidden; }
+    .canvas-bg {
+      background-color: #0b0f19;
+      background-image: radial-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .node-transition { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.5); border-radius: 9999px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.8); }
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.45)); }
+      50% { filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.8)); }
+    }
+    .glow-center { animation: pulseGlow 3s infinite ease-in-out; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-100 select-none">
+
+  <!-- Top Header & Navigation -->
+  <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur-md sticky top-0 z-30 px-4 py-3">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 via-indigo-500 to-emerald-500 p-0.5 shrink-0">
+          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-extrabold text-sm tracking-tighter text-white">
+            IS+SC
+          </div>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold tracking-tight text-white leading-tight">
+            Ingeniería en Software y Sistemas Computacionales
+          </h1>
+          <p class="text-xs text-slate-400">
+            Mapa Mental Maestro (68 Nodos) • 27 Áreas de Software + 20 de Sistemas + 17 de Ciberseguridad + Núcleo TI
+          </p>
+        </div>
+      </div>
+
+      <!-- Mode Switcher & Search -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="relative flex-1 sm:flex-initial sm:w-64">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Buscar (ej. Compiladores, HPC, SCADA, MLOps, Forense)..."
+            class="w-full bg-slate-950/90 border border-slate-700/80 rounded-lg pl-8 pr-7 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+          />
+          <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <button id="clearSearchBtn" title="Limpiar búsqueda" class="hidden absolute right-2 top-1.5 text-slate-400 hover:text-white text-xs">✕</button>
+        </div>
+
+        <div class="inline-flex rounded-lg bg-slate-950 p-1 border border-slate-800">
+          <button id="tabMapBtn" class="px-3 py-1 rounded-md text-xs font-semibold bg-indigo-600 text-white transition">
+            Mapa Mental
+          </button>
+          <button id="tabTreeBtn" class="px-3 py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition">
+            Vista Jerárquica
+          </button>
+          <button id="tabSynergyBtn" class="px-3 py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition">
+            Puentes &amp; TI
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="max-w-7xl mx-auto mt-2.5 pt-2.5 border-t border-slate-800/60 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex flex-wrap items-center gap-1.5" id="filterPills">
+        <button data-filter="all" class="filter-btn px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-900 transition">
+          Todo el Mapa (51 nodos)
+        </button>
+        <button data-filter="ti" class="filter-btn px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span> Núcleo: Carrera &amp; TI (4)
+        </button>
+        <button data-filter="software" class="filter-btn px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/25 transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-indigo-400"></span> Ing. de Software (17)
+        </button>
+        <button data-filter="sistemas" class="filter-btn px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Ing. en Sistemas (11)
+        </button>
+        <button data-filter="cyber" class="filter-btn px-2.5 py-1 rounded-full text-xs font-medium bg-rose-500/15 text-rose-300 border border-rose-500/30 hover:bg-rose-500/25 transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-rose-400"></span> Ciberseguridad Total (17)
+        </button>
+        <button data-filter="blueteam" class="filter-btn px-2.5 py-1 rounded-full text-xs font-medium bg-sky-500/15 text-sky-300 border border-sky-500/30 hover:bg-sky-500/25 transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-sky-400"></span> Solo Blue Team, GRC &amp; Defensa
+        </button>
+      </div>
+
+      <div id="mapControlsBar" class="flex items-center gap-1.5 text-xs">
+        <span class="text-slate-400 hidden sm:inline mr-1">Arrastra para mover • Rueda para zoom</span>
+        <button id="zoomOutBtn" title="Alejar" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold">−</button>
+        <span id="zoomLevelText" class="text-slate-300 font-mono text-[11px] w-11 text-center">100%</span>
+        <button id="zoomInBtn" title="Acercar" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold">+</button>
+        <button id="resetViewBtn" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">Centrar</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace Container -->
+  <main class="flex-1 flex flex-col lg:flex-row relative overflow-hidden">
+
+    <!-- VIEW 1: INTERACTIVE RADIAL MIND MAP -->
+    <section id="viewMap" class="flex-1 relative canvas-bg overflow-hidden min-h-[540px] lg:min-h-[calc(100vh-120px)] cursor-grab active:cursor-grabbing">
+      <svg id="mindmapSvg" class="w-full h-full block" viewBox="-1420 -760 2840 1600" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="shadowCard" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.55" />
+          </filter>
+          <linearGradient id="gradCore" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#6366f1" />
+            <stop offset="50%" stop-color="#f59e0b" />
+            <stop offset="100%" stop-color="#10b981" />
+          </linearGradient>
+          <linearGradient id="gradTI" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f59e0b" />
+            <stop offset="100%" stop-color="#ea580c" />
+          </linearGradient>
+          <linearGradient id="gradSoft" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#4f46e5" />
+            <stop offset="100%" stop-color="#06b6d4" />
+          </linearGradient>
+          <linearGradient id="gradSys" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#059669" />
+            <stop offset="100%" stop-color="#14b8a6" />
+          </linearGradient>
+          <linearGradient id="gradCyber" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e11d48" />
+            <stop offset="100%" stop-color="#9333ea" />
+          </linearGradient>
+          <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0284c7" />
+            <stop offset="100%" stop-color="#2563eb" />
+          </linearGradient>
+        </defs>
+
+        <g id="viewportGroup">
+          <!-- Background Subtle Zones -->
+          <g id="zonesLayer">
+            <rect x="-1350" y="-700" width="1120" height="1300" rx="40" fill="rgba(79, 70, 229, 0.04)" stroke="rgba(99, 102, 241, 0.18)" stroke-dasharray="8 8" stroke-width="2" />
+            <text x="-790" y="-668" text-anchor="middle" fill="#818cf8" font-size="15" font-weight="700" letter-spacing="2" opacity="0.7">HEMISFERIO: INGENIERÍA DE SOFTWARE (27 ÁREAS)</text>
+
+            <rect x="220" y="-715" width="1130" height="710" rx="40" fill="rgba(16, 185, 129, 0.038)" stroke="rgba(16, 185, 129, 0.18)" stroke-dasharray="8 8" stroke-width="2" />
+            <text x="785" y="-683" text-anchor="middle" fill="#34d399" font-size="15" font-weight="700" letter-spacing="2" opacity="0.7">HEMISFERIO: INGENIERÍA EN SISTEMAS COMPUTACIONALES (20 ÁREAS)</text>
+
+            <rect x="360" y="2" width="850" height="765" rx="36" fill="rgba(244, 63, 94, 0.045)" stroke="rgba(244, 63, 94, 0.24)" stroke-dasharray="6 6" stroke-width="2" />
+            <text x="785" y="26" text-anchor="middle" fill="#fb7185" font-size="13" font-weight="700" letter-spacing="1.5" opacity="0.85">ESPECIALIDAD EXPANDIDA: CIBERSEGURIDAD (17 ÁREAS: BLUE, RED, PURPLE &amp; GRC)</text>
+          </g>
+
+          <!-- Links Layer -->
+          <g id="linksLayer"></g>
+
+          <!-- Nodes Layer -->
+          <g id="nodesLayer"></g>
+        </g>
+      </svg>
+
+      <!-- Floating Legend Bottom Left -->
+      <div class="absolute bottom-3 left-3 bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-xl p-3 text-xs shadow-xl max-w-xs pointer-events-auto">
+        <div class="font-semibold text-slate-200 mb-1.5 flex items-center justify-between">
+          <span>Estructura del Mapa (68 Nodos)</span>
+          <span class="text-[10px] text-slate-400 font-normal">Haz clic en cualquier nodo</span>
+        </div>
+        <div class="space-y-1 text-[11px] text-slate-300">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-gradient-to-r from-amber-500 to-orange-500 inline-block shrink-0"></span>
+            <span><strong>Centro + TI (4):</strong> Soporte ITSM, ERP/CRM y gestión transversal</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-gradient-to-r from-indigo-500 to-cyan-500 inline-block shrink-0"></span>
+            <span><strong>Software (27):</strong> Web, Móvil, Arquitectura, Compiladores, IA/MLOps, Datos y QA</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-gradient-to-r from-emerald-500 to-teal-500 inline-block shrink-0"></span>
+            <span><strong>Sistemas (20):</strong> Redes, SDN, Cloud, SRE, HPC, Kernel, FPGAs, IoT y OT/SCADA</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded bg-gradient-to-r from-sky-500 via-purple-500 to-rose-500 inline-block shrink-0"></span>
+            <span><strong>Ciberseguridad (17):</strong> Blue Team, Forense, IR, Malware, GRC, TTPs y Red Team</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: HIERARCHICAL TREE & STUDY CARDS -->
+    <section id="viewTree" class="hidden flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-950 custom-scroll">
+      <div class="max-w-6xl mx-auto space-y-6" id="treeContainer"></div>
+    </section>
+
+    <!-- VIEW 3: SYNERGY & TI CENTER EXPLANATION -->
+    <section id="viewSynergy" class="hidden flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-950 custom-scroll">
+      <div class="max-w-5xl mx-auto space-y-6">
+        <div class="bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-900 border border-amber-500/30 rounded-2xl p-5 sm:p-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold mb-3">
+            <span>★ El Corazón del Mapa Mental</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">
+            ¿Por qué TI (Tecnologías de la Información) está en el centro junto a la carrera?
+          </h2>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Tu carrera, <strong>Ingeniería en Software y Sistemas Computacionales</strong>, fusiona dos mundos que tradicionalmente se estudiaban por separado: la construcción lógica de programas (Software) y la infraestructura física/virtual donde corren (Sistemas). Justo en el centro vive <strong>TI (Tecnologías de la Información)</strong>, porque el profesional de TI es el integrador transversal que <em>"sabe un poco de todo"</em>: entiende cómo el código se conecta con la base de datos, cómo pasa por la red, cómo se aloja en el servidor o la nube y cómo se protege y da soporte a los usuarios finales.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-slate-900/90 border border-indigo-500/30 rounded-xl p-4">
+            <div class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-1">Pilar Izquierdo (27 Áreas)</div>
+            <h3 class="text-base font-bold text-white mb-2">Ingeniería de Software</h3>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              Abarca desde Ingeniería de Requisitos, Product Management, UI/UX, Web, Móvil y Escritorio hasta Sistemas Distribuidos, Compiladores, Blockchain, Ingeniería/Ciencia de Datos, IA/MLOps, Visión/NLP y Rendimiento.
+            </p>
+            <div class="text-[11px] text-indigo-300 bg-indigo-950/50 rounded-lg p-2.5 border border-indigo-800/40">
+              <strong>Pregunta clave:</strong> ¿Cómo diseñamos, programamos y probamos aplicaciones útiles, inteligentes y escalables?
+            </div>
+          </div>
+
+          <div class="bg-slate-900/90 border border-amber-500/40 rounded-xl p-4 ring-1 ring-amber-500/20">
+            <div class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">Núcleo Conector (4 Áreas)</div>
+            <h3 class="text-base font-bold text-white mb-2">TI (Tecnologías de la Información)</h3>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              Conecta el software con los sistemas y las personas. Abarca Service Desk (ITSM), gestión de activos, plataformas ERP/CRM, administración de cuentas, redes locales y continuidad operativa.
+            </p>
+            <div class="text-[11px] text-amber-300 bg-amber-950/50 rounded-lg p-2.5 border border-amber-800/40">
+              <strong>Pregunta clave:</strong> ¿Cómo hacemos que toda la tecnología de una organización funcione sin fricciones día a día?
+            </div>
+          </div>
+
+          <div class="bg-slate-900/90 border border-emerald-500/30 rounded-xl p-4">
+            <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">Pilar Derecho (20 + 17 Áreas)</div>
+            <h3 class="text-base font-bold text-white mb-2">Ing. en Sistemas Computacionales</h3>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              Domina la infraestructura y el hardware: Redes/SDN, Telecomunicaciones, Cloud/FinOps, DevOps/SRE/Platform Eng, Kernel/SO, HPC, Arquitectura de CPU, FPGAs, Embebidos/IoT, OT/SCADA y Ciberseguridad.
+            </p>
+            <div class="text-[11px] text-emerald-300 bg-emerald-950/50 rounded-lg p-2.5 border border-emerald-800/40">
+              <strong>Pregunta clave:</strong> ¿Dónde corre el software, cómo se procesa en el silicio y cómo lo blindamos ante ataques?
+            </div>
+          </div>
+        </div>
+
+        <!-- Ecosistema de Ciberseguridad Expandido -->
+        <div class="bg-slate-900 border border-sky-500/30 rounded-2xl p-5">
+          <h3 class="text-base font-bold text-white mb-3">Cómo se articulan Blue Team, Red Team, Purple Team y GRC</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-sky-500/30">
+              <div class="font-bold text-sky-300 mb-1">Blue Team (Defensa Activa)</div>
+              <p class="text-slate-400">Agrupa al <strong>SOC Analyst</strong>, <strong>Respuesta a Incidentes (IR)</strong>, <strong>Informática Forense (DFIR)</strong>, <strong>Analista de Malware</strong> y <strong>Threat Hunting</strong> para prevenir, detectar, investigar y erradicar intrusiones.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-purple-500/30">
+              <div class="font-bold text-purple-300 mb-1">Purple Team &amp; TTPs</div>
+              <p class="text-slate-400">Mediante la <strong>Ejecución Controlada de TTPs</strong> (MITRE ATT&amp;CK), reproduce técnicas reales de ataque junto al Blue Team para verificar si el SIEM y el EDR realmente generan alertas.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-amber-500/30">
+              <div class="font-bold text-amber-300 mb-1">GRC &amp; Modelado de Amenazas</div>
+              <p class="text-slate-400"><strong>Gobierno, Riesgo y Cumplimiento</strong> define políticas y normativas (ISO 27001, NIST), mientras el <strong>Modelado de Amenazas</strong> anticipa fallos en la arquitectura antes de escribir código.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-rose-500/30">
+              <div class="font-bold text-rose-300 mb-1">Red Team &amp; Ofensiva</div>
+              <p class="text-slate-400">Con <strong>Pentesting</strong>, <strong>AppSec</strong>, <strong>OSINT</strong>, <strong>Phishing</strong>, <strong>Active Directory</strong> y <strong>Cloud Red Teaming</strong>, simula adversarios reales para descubrir brechas antes que los atacantes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Puentes Híbridos -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+          <h3 class="text-base font-bold text-white mb-4">Puentes Directos entre tus 2 Ingenierías</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col gap-1">
+              <div class="font-bold text-cyan-300">1. DevOps, SRE, Platform Engineering &amp; DevSecOps</div>
+              <p class="text-slate-400">Une el código de los desarrolladores con plataformas internas de autoservicio (IDP), contenedores (Docker/K8s), alta disponibilidad (SRE) y seguridad en pipelines (DevSecOps).</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col gap-1">
+              <div class="font-bold text-purple-300">2. IA, MLOps &amp; Supercomputación / HPC (Software ↔ Sistemas)</div>
+              <p class="text-slate-400">El entrenamiento e inferencia de LLMs y Visión por Computadora en Software depende directamente de los clústeres de GPUs (CUDA/HPC) e Ingeniería Cloud en Sistemas.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col gap-1">
+              <div class="font-bold text-emerald-300">3. Compiladores, Kernel/Drivers, Arquitectura de CPU &amp; Malware</div>
+              <p class="text-slate-400">Comprender cómo un Compilador traduce código a ensamblador y cómo el Kernel gestiona la CPU/RAM permite tanto diseñar sistemas embebidos/FPGAs como analizar malware avanzado.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col gap-1">
+              <div class="font-bold text-amber-300">4. Sistemas Distribuidos, FinOps, DRP &amp; GRC</div>
+              <p class="text-slate-400">Diseñar software distribuido tolerante a fallos va de la mano con planes de Recuperación ante Desastres (DRP), optimización de costos en la nube (FinOps) y cumplimiento normativo (GRC).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIDEBAR DETAIL INSPECTOR -->
+    <aside id="detailPanel" class="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-slate-800 bg-slate-900/95 backdrop-blur-md p-4 sm:p-5 flex flex-col justify-between overflow-y-auto max-h-[420px] lg:max-h-[calc(100vh-120px)] custom-scroll shrink-0">
+      <div id="detailContent"></div>
+
+      <div class="mt-6 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+        <button id="prevNodeBtn" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 transition">← Anterior</button>
+        <span id="nodeCounterText">Nodo 1 de 68</span>
+        <button id="nextNodeBtn" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Siguiente →</button>
+      </div>
+    </aside>
+
+  </main>
+
+  <script>
+    // Complete Master Dataset for the Mind Map (68 nodes)
+    const NODES = [
+      // ==========================================
+      // 1. NÚCLEO CENTRAL & TI (4 NODOS)
+      // ==========================================
+      {
+        id: 'core',
+        label: 'Ing. en Software y\nSistemas Computacionales',
+        title: 'Ingeniería en Software y Sistemas Computacionales',
+        category: 'ti',
+        badge: 'Carrera Dual (Núcleo Central)',
+        x: 0,
+        y: -95,
+        w: 260,
+        h: 74,
+        isHub: true,
+        color: '#f59e0b',
+        grad: 'url(#gradCore)',
+        description: 'Tu carrera integra dos ingenierías completas en una sola: por un lado el diseño, desarrollo, datos e inteligencia del Software (27 áreas), y por otro la arquitectura de hardware, redes, nube, sistemas operativos y Ciberseguridad de Sistemas Computacionales (37 áreas).',
+        tech: ['Algoritmos y Estructuras de Datos', 'Arquitectura de Computadoras', 'Ingeniería de Software', 'Redes y Sistemas Operativos', 'Ciberseguridad Integral'],
+        connection: 'Punto de origen del mapa: se divide en Ingeniería de Software (izquierda), Ingeniería en Sistemas (derecha) y se apoya directamente en TI en el centro.'
+      },
+      {
+        id: 'ti',
+        label: 'TI (Tecnologías de\nla Información)',
+        title: 'TI (Tecnologías de la Información) — "Saber un poco de todo"',
+        category: 'ti',
+        parent: 'core',
+        badge: 'Centro Integrador Transversal',
+        x: 0,
+        y: 55,
+        w: 235,
+        h: 66,
+        isHub: true,
+        color: '#f59e0b',
+        grad: 'url(#gradTI)',
+        description: 'Ubicado en el centro junto a Software y Sistemas. TI es la disciplina todoterreno: implica conocer un poco de programación, redes, soporte técnico, servidores, bases de datos, ciberseguridad y gestión tecnológica para mantener operando a cualquier organización.',
+        tech: ['ITSM / ITIL', 'Gestión de Infraestructura', 'Soporte N1-N3', 'Bases de Datos', 'Administración M365 / Google Workspace', 'Continuidad Operativa'],
+        connection: 'Puente directo entre Ingeniería de Software, Ingeniería en Sistemas y Ciberseguridad.'
+      },
+      {
+        id: 'ti_soporte',
+        label: 'Soporte Técnico &\nService Desk (ITSM)',
+        title: 'Soporte Técnico, Helpdesk y Gestión de Servicios (ITSM)',
+        category: 'ti',
+        parent: 'ti',
+        badge: 'Núcleo TI • Operación y Usuarios',
+        x: -120,
+        y: 185,
+        w: 180,
+        h: 46,
+        color: '#f59e0b',
+        description: 'Atención y resolución de incidentes técnicos de hardware, software y conectividad (Niveles 1, 2 y 3), aplicando buenas prácticas ITIL para mantener la productividad de toda la organización.',
+        tech: ['ITIL v4', 'ServiceNow / Jira Service Management', 'Diagnóstico de Hardware y SO', 'Escritorio Remoto', 'SLAs de Atención'],
+        connection: 'Rama práctica de TI que escala incidentes críticos hacia SysAdmin, Redes o el SOC.'
+      },
+      {
+        id: 'ti_erp',
+        label: 'Gestión de Activos,\nERP / CRM & M365',
+        title: 'Gestión de Activos de TI (ITAM), ERP / CRM y Plataformas Empresariales',
+        category: 'ti',
+        parent: 'ti',
+        badge: 'Núcleo TI • Negocio y Plataformas',
+        x: 120,
+        y: 185,
+        w: 180,
+        h: 46,
+        color: '#f59e0b',
+        description: 'Administración de plataformas tecnológicas corporativas (ERP, CRM, suites colaborativas), control de inventario de hardware/licencias de software y alineación tecnológica con las áreas de negocio.',
+        tech: ['SAP / Odoo / Oracle ERP', 'Salesforce / HubSpot', 'Microsoft 365 & Entra ID', 'IT Asset Management (GLPI/Snipe-IT)', 'Presupuesto y Proveedores TI'],
+        connection: 'Conecta el área de TI con Gobierno, Riesgo y Cumplimiento (GRC) y Software empresarial.'
+      },
+
+      // ==========================================
+      // 2. PILAR IZQUIERDO: INGENIERÍA DE SOFTWARE (27 NODOS)
+      // ==========================================
+      {
+        id: 'soft_hub',
+        label: 'INGENIERÍA DE\nSOFTWARE',
+        title: 'Rama Principal: Ingeniería de Software (27 Especialidades)',
+        category: 'software',
+        parent: 'core',
+        badge: 'Pilar 1 • Creación, Datos, IA y Calidad',
+        x: -335,
+        y: -20,
+        w: 195,
+        h: 60,
+        isHub: true,
+        color: '#6366f1',
+        grad: 'url(#gradSoft)',
+        description: 'Rama dedicada al ciclo de vida completo del software: desde requisitos, gestión ágil, UI/UX, desarrollo web/móvil/escritorio hasta arquitectura distribuida, compiladores, blockchain, ingeniería de datos, inteligencia artificial y calidad.',
+        tech: ['Git / GitHub', 'Patrones de Diseño', 'Metodologías Ágiles', 'Clean Code & SOLID', 'Ciclo de Vida (SDLC)'],
+        connection: 'Se conecta con TI para la operación y con Sistemas a través de DevOps, Cloud, HPC y AppSec.'
+      },
+
+      // --- Columna Software 1 (x = -650) ---
+      {
+        id: 'requisitos',
+        label: 'Ing. de Requisitos &\nBusiness Analysis',
+        title: 'Ingeniería de Requisitos y Análisis de Negocio (Business Analyst)',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Software • Planeación y Negocio',
+        x: -650,
+        y: -625,
+        w: 180,
+        h: 46,
+        color: '#818cf8',
+        description: 'Traducción de las necesidades del cliente y del negocio en especificaciones técnicas claras: levantamiento de requerimientos funcionales y no funcionales, historias de usuario, modelado de procesos y casos de uso.',
+        tech: ['Historias de Usuario (Gherkin)', 'Casos de Uso & UML', 'Modelado BPMN', 'Matriz de Trazabilidad', 'IEEE 830 / ISO 29148'],
+        connection: 'Punto de partida de todo proyecto de software; alimenta a Gestión de Proyectos, Arquitectura y QA.'
+      },
+      {
+        id: 'frontend',
+        label: 'Desarrollo Frontend',
+        title: 'Desarrollo Frontend',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Desarrollo Web • Cliente',
+        x: -650,
+        y: -500,
+        w: 175,
+        h: 44,
+        color: '#6366f1',
+        description: 'Construcción de la interfaz gráfica y experiencia interactiva en el navegador web, cuidando diseño responsivo, estado de la aplicación, accesibilidad y velocidad de carga (Web Vitals).',
+        tech: ['HTML5 & CSS3 / Tailwind', 'JavaScript / TypeScript', 'React / Next.js', 'Angular', 'Vue.js', 'Estado (Redux / Zustand)'],
+        connection: 'Consume las APIs del Backend, materializa el Diseño UI/UX y forma parte de FullStack.'
+      },
+      {
+        id: 'fullstack',
+        label: 'Desarrollo FullStack',
+        title: 'Desarrollo FullStack',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Desarrollo Web • Extremo a Extremo',
+        x: -650,
+        y: -380,
+        w: 175,
+        h: 44,
+        color: '#6366f1',
+        description: 'Dominio integral tanto del Frontend como del Backend, permitiendo diseñar, programar, conectar con bases de datos y desplegar una aplicación web completa de principio a fin.',
+        tech: ['MERN / PERN Stack', 'Next.js / Nuxt / Remix', 'TypeScript', 'APIs REST & GraphQL', 'Docker', 'ORM (Prisma/TypeORM)'],
+        connection: 'Integra Frontend + Backend + Bases de Datos.'
+      },
+      {
+        id: 'ui_ux',
+        label: 'Diseño UI / UX &\nProducto Digital',
+        title: 'Diseño UI/UX (Interfaz y Experiencia de Usuario)',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Diseño Centrado en el Usuario',
+        x: -650,
+        y: -255,
+        w: 175,
+        h: 46,
+        color: '#818cf8',
+        description: 'Investigación de usuarios, arquitectura de información, wireframes, prototipado interactivo y sistemas de diseño para que el software sea intuitivo, accesible y ergonómico.',
+        tech: ['Figma', 'Design Systems', 'Prototipado & Wireframing', 'Pruebas de Usabilidad', 'Accesibilidad (WCAG)', 'Design Thinking'],
+        connection: 'Guía directamente el trabajo de Desarrollo Frontend, Móvil y Aplicaciones de Escritorio.'
+      },
+      {
+        id: 'movil_gen',
+        label: 'Desarrollo para\nMóviles en General',
+        title: 'Desarrollo para Móviles en General (Nativo e Híbrido)',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Ecosistema Mobile',
+        x: -650,
+        y: -125,
+        w: 185,
+        h: 48,
+        color: '#38bdf8',
+        description: 'Diseño y programación de aplicaciones para smartphones y tablets, gestionando sensores, cámara, biometría, GPS, modo offline, notificaciones push y consumo eficiente de energía.',
+        tech: ['Flutter (Dart)', 'React Native', 'Kotlin Multiplatform', 'Arquitectura MVVM / Clean', 'SQLite / Room / CoreData'],
+        connection: 'Rama madre móvil de la que se desprenden Android, iOS y Dispositivos Apple.'
+      },
+      {
+        id: 'desktop',
+        label: 'Aplicaciones de\nEscritorio',
+        title: 'Aplicaciones de Escritorio (Desktop)',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Software Nativo & Multiplataforma',
+        x: -650,
+        y: 5,
+        w: 175,
+        h: 48,
+        color: '#6366f1',
+        description: 'Software que se ejecuta directamente sobre sistemas operativos de escritorio (Windows, macOS, Linux), aprovechando recursos locales de hardware, GPU y sistema de archivos.',
+        tech: ['C# (.NET / WPF / MAUI)', 'C++ / Qt', 'Electron', 'Tauri (Rust)', 'JavaFX', 'Python (PyQt / Tkinter)'],
+        connection: 'Interactúa estrechamente con los Sistemas Operativos administrados en la rama de Sistemas.'
+      },
+      {
+        id: 'arquitectura',
+        label: 'Arquitectura de\nSoftware',
+        title: 'Arquitectura de Software',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Diseño Estructural de Alto Nivel',
+        x: -650,
+        y: 130,
+        w: 175,
+        h: 48,
+        color: '#818cf8',
+        description: 'Toma de decisiones estructurales sobre cómo se organiza un sistema complejo para garantizar escalabilidad, mantenibilidad, desacoplamiento, tolerancia a fallos y seguridad desde el diseño.',
+        tech: ['Microservicios vs Monolitos Modulares', 'Arquitectura Hexagonal / Clean', 'Event-Driven Architecture', 'Domain-Driven Design (DDD)', 'Diagramas C4'],
+        connection: 'Rama de la que parten Sistemas Distribuidos y Compiladores; se enlaza con Modelado de Amenazas.'
+      },
+      {
+        id: 'videojuegos',
+        label: 'Desarrollo de\nVideojuegos',
+        title: 'Desarrollo de Videojuegos (Game Dev)',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Entretenimiento Interactivo & Motores 3D',
+        x: -650,
+        y: 255,
+        w: 175,
+        h: 48,
+        color: '#818cf8',
+        description: 'Programación de motores gráficos, físicas en tiempo real, inteligencia artificial de personajes (NPCs), audio espacial, redes multijugador y mundos interactivos 2D/3D.',
+        tech: ['Unity (C#)', 'Unreal Engine (C++)', 'Godot', 'OpenGL / Vulkan / DirectX', 'Shaders (HLSL/GLSL)', 'Netcode Multijugador'],
+        connection: 'Se extiende hacia la Realidad Extendida (AR/VR/XR) y simulación física.'
+      },
+      {
+        id: 'ia',
+        label: 'Inteligencia\nArtificial',
+        title: 'Inteligencia Artificial (IA, Machine Learning & Deep Learning)',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'ML, Redes Neuronales & Agentes',
+        x: -650,
+        y: 380,
+        w: 175,
+        h: 48,
+        color: '#a855f7',
+        description: 'Creación y entrenamiento de modelos matemáticos y redes neuronales capaces de aprender patrones, razonar, generar contenido multimodal y tomar decisiones autónomas.',
+        tech: ['PyTorch', 'TensorFlow / Keras', 'Scikit-learn', 'Transformers & LLMs', 'Aprendizaje por Refuerzo', 'Agentes de IA'],
+        connection: 'Se expande en Visión por Computadora/NLP y MLOps; requiere clústeres HPC en Sistemas.'
+      },
+      {
+        id: 'qa',
+        label: 'QA (Quality\nAssurance)',
+        title: 'QA (Aseguramiento de la Calidad de Software)',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Calidad • Procesos y Estándares',
+        x: -650,
+        y: 510,
+        w: 175,
+        h: 48,
+        color: '#6366f1',
+        description: 'Estrategia integral para prevenir defectos durante todo el ciclo de desarrollo, definiendo estándares de calidad, planes de prueba, criterios de aceptación y mejora continua.',
+        tech: ['Playwright', 'Cypress', 'Selenium', 'Postman (API Testing)', 'Jira / Xray / TestRail', 'ISO/IEC 25010'],
+        connection: 'Coordina las actividades de Testing e Ingeniería de Rendimiento.'
+      },
+
+      // --- Columna Software 2 (x = -935) ---
+      {
+        id: 'pm_agile',
+        label: 'Gestión de Proyectos\n& Product Mgmt',
+        title: 'Gestión de Proyectos de Software, Scrum y Product Management',
+        category: 'software',
+        parent: 'requisitos',
+        badge: 'Software • Liderazgo, Agile y Producto',
+        x: -935,
+        y: -625,
+        w: 180,
+        h: 46,
+        color: '#818cf8',
+        description: 'Dirección estratégica y operativa de equipos de ingeniería: definición del roadmap del producto, priorización del backlog, facilitación de ceremonias ágiles y gestión de tiempos, costos y riesgos.',
+        tech: ['Scrum (Product Owner / Scrum Master)', 'Kanban & Lean Software', 'Roadmaps & OKRs', 'Jira / Linear / Notion', 'Estimación y Métricas (Velocity/Lead Time)'],
+        connection: 'Convierte los Requisitos en entregas iterativas coordinando a Desarrolladores, UI/UX y QA.'
+      },
+      {
+        id: 'backend',
+        label: 'Desarrollo Backend',
+        title: 'Desarrollo Backend',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Desarrollo Web • Servidor y Lógica',
+        x: -935,
+        y: -500,
+        w: 175,
+        h: 44,
+        color: '#6366f1',
+        description: 'Lógica de negocio en el servidor, autenticación, autorización, procesamiento de transacciones, seguridad de datos y comunicación con bases de datos y servicios externos.',
+        tech: ['Node.js / NestJS', 'Python (Django/FastAPI)', 'Java (Spring Boot)', 'C# (.NET)', 'Go', 'Rust (Actix/Axum)'],
+        connection: 'Se conecta con Bases de Datos (DBA), APIs/Microservicios y se despliega en Cloud/DevOps.'
+      },
+      {
+        id: 'apis_micro',
+        label: 'APIs, Microservicios\ne Integraciones',
+        title: 'Ingeniería de APIs, Microservicios e Integración de Sistemas',
+        category: 'software',
+        parent: 'backend',
+        badge: 'Software • Comunicación entre Sistemas',
+        x: -935,
+        y: -380,
+        w: 180,
+        h: 46,
+        color: '#6366f1',
+        description: 'Diseño de contratos de comunicación rápidos y seguros entre aplicaciones internas y de terceros: pasarelas de pago, API Gateways, mensajería asíncrona y webhooks.',
+        tech: ['REST & OpenAPI (Swagger)', 'GraphQL', 'gRPC & Protocol Buffers', 'WebSockets', 'Kafka & RabbitMQ', 'Kong / Apigee API Gateway'],
+        connection: 'Une el Backend con el Frontend, las apps móviles y las plataformas Low-Code/ERP.'
+      },
+      {
+        id: 'android',
+        label: 'Android',
+        title: 'Desarrollo para Android',
+        category: 'software',
+        parent: 'movil_gen',
+        badge: 'Móviles • Ecosistema Google/Open',
+        x: -935,
+        y: -245,
+        w: 165,
+        h: 42,
+        color: '#38bdf8',
+        description: 'Creación de aplicaciones para el sistema operativo móvil más utilizado del mundo, abarcando teléfonos, tablets, plegables, Android TV, Wear OS y Android Auto.',
+        tech: ['Kotlin', 'Java', 'Jetpack Compose', 'Android Studio', 'Gradle', 'Coroutines & Flow'],
+        connection: 'Hijo directo de Desarrollo para Móviles en General.'
+      },
+      {
+        id: 'ios',
+        label: 'iOS',
+        title: 'Desarrollo para iOS',
+        category: 'software',
+        parent: 'movil_gen',
+        badge: 'Móviles • iPhone',
+        x: -935,
+        y: -170,
+        w: 165,
+        h: 42,
+        color: '#38bdf8',
+        description: 'Desarrollo especializado para iPhone, enfocado en alto rendimiento, fluidez gráfica, lineamientos Human Interface Guidelines y privacidad en el ecosistema móvil de Apple.',
+        tech: ['Swift', 'SwiftUI', 'UIKit', 'Xcode', 'Combine / Async-Await', 'TestFlight'],
+        connection: 'Hijo directo de Desarrollo para Móviles en General y hermano de Dispositivos Apple.'
+      },
+      {
+        id: 'apple_devices',
+        label: 'Dispositivos Apple',
+        title: 'Desarrollo para Dispositivos Apple',
+        category: 'software',
+        parent: 'movil_gen',
+        badge: 'Ecosistema Apple Completo',
+        x: -935,
+        y: -95,
+        w: 165,
+        h: 42,
+        color: '#38bdf8',
+        description: 'Creación de experiencias nativas interconectadas para todo el hardware de Apple más allá del iPhone: iPad, Mac (Apple Silicon), Apple Watch, Apple TV y Apple Vision Pro.',
+        tech: ['iPadOS', 'macOS', 'watchOS', 'tvOS', 'visionOS', 'CloudKit & Handoff'],
+        connection: 'Extiende el desarrollo iOS hacia todo el ecosistema de dispositivos Apple.'
+      },
+      {
+        id: 'distribuidos',
+        label: 'Sistemas Distribuidos\ny Concurrencia',
+        title: 'Sistemas Distribuidos, Paralelismo y Alta Concurrencia',
+        category: 'software',
+        parent: 'arquitectura',
+        badge: 'Software • Escalabilidad Masiva',
+        x: -935,
+        y: 5,
+        w: 180,
+        h: 46,
+        color: '#818cf8',
+        description: 'Diseño de software que se ejecuta en múltiples nodos interconectados como si fuera un solo sistema, resolviendo retos de consenso, relojes lógicos, particiones de red y millones de peticiones simultáneas.',
+        tech: ['Teorema CAP & Consenso (Raft/Paxos)', 'Multithreading & Async IO', 'Go / Erlang / Elixir / Rust', 'Caché Distribuida', 'Tolerancia a Fallos Bizantinos'],
+        connection: 'Fundamento teórico y práctico de la Nube, Blockchain, Big Data y SRE.'
+      },
+      {
+        id: 'compiladores',
+        label: 'Compiladores y\nLenguajes de Prog.',
+        title: 'Compiladores, Intérpretes y Diseño de Lenguajes de Programación',
+        category: 'software',
+        parent: 'arquitectura',
+        badge: 'Software • Ciencias de la Computación',
+        x: -935,
+        y: 130,
+        w: 180,
+        h: 46,
+        color: '#818cf8',
+        description: 'Construcción de las herramientas que traducen el código fuente humano a código máquina optimizado: análisis léxico, sintáctico (parsers), árboles AST, análisis estático y máquinas virtuales.',
+        tech: ['LLVM & Clang', 'ANTLR / Bison / Flex', 'Árboles de Sintaxis Abstracta (AST)', 'WebAssembly (Wasm)', 'Garbage Collection & Runtimes (JVM/V8)'],
+        connection: 'Une la teoría de lenguajes en Software con la Arquitectura de Computadoras y el Kernel en Sistemas.'
+      },
+      {
+        id: 'ar_vr',
+        label: 'Realidad Extendida\n(AR / VR / XR)',
+        title: 'Realidad Aumentada, Virtual y Mixta (AR / VR / XR)',
+        category: 'software',
+        parent: 'videojuegos',
+        badge: 'Computación Espacial & Simulación',
+        x: -935,
+        y: 255,
+        w: 175,
+        h: 46,
+        color: '#818cf8',
+        description: 'Desarrollo de experiencias inmersivas y gemelos digitales para visores de realidad virtual/mixta y dispositivos móviles, aplicadas a entrenamiento industrial, medicina y entretenimiento.',
+        tech: ['OpenXR', 'ARKit / ARCore', 'Meta Quest SDK', 'visionOS', 'WebXR / Three.js', 'Gemelos Digitales'],
+        connection: 'Conecta el Desarrollo de Videojuegos con Dispositivos Apple y Móviles.'
+      },
+      {
+        id: 'ingenieria_datos',
+        label: 'Ingeniería de Datos\n& Big Data',
+        title: 'Ingeniería de Datos (Data Engineering & Big Data)',
+        category: 'software',
+        parent: 'soft_hub',
+        badge: 'Datos • Pipelines y Arquitectura',
+        x: -935,
+        y: 380,
+        w: 180,
+        h: 48,
+        color: '#a855f7',
+        description: 'Diseño y construcción de autopistas de datos (pipelines ETL/ELT), Data Warehouses y Data Lakes capaces de recolectar, limpiar y procesar terabytes de información en tiempo real.',
+        tech: ['Apache Spark & Hadoop', 'Apache Airflow', 'Kafka', 'Snowflake / BigQuery / Databricks', 'dbt', 'Python & SQL Distribuido'],
+        connection: 'Prepara la infraestructura de datos que consumen el Analista/Científico de Datos y la IA.'
+      },
+      {
+        id: 'testing',
+        label: 'Testing',
+        title: 'Testing de Software (Unitario, Integración y E2E)',
+        category: 'software',
+        parent: 'qa',
+        badge: 'Calidad • Verificación Técnica',
+        x: -935,
+        y: 510,
+        w: 175,
+        h: 44,
+        color: '#6366f1',
+        description: 'Ejecución de pruebas técnicas manuales y automatizadas sobre el código para detectar errores (bugs) y regresiones antes de que lleguen a producción.',
+        tech: ['Jest / Vitest / JUnit / PyTest', 'Pruebas Unitarias, Integración y E2E', 'TDD / BDD (Cucumber)', 'Mocking & Cobertura de Código'],
+        connection: 'Hijo directo de QA e integrado automáticamente en los pipelines de DevOps.'
+      },
+
+      // --- Columna Software 3 (x = -1215) ---
+      {
+        id: 'dba',
+        label: 'Bases de Datos\n(DBA & SQL/NoSQL)',
+        title: 'Ingeniería y Administración de Bases de Datos (DBA)',
+        category: 'software',
+        parent: 'backend',
+        badge: 'Datos • Persistencia y Optimización',
+        x: -1215,
+        y: -500,
+        w: 180,
+        h: 46,
+        color: '#6366f1',
+        description: 'Diseño de modelos relacionales y documentales, optimización de consultas SQL, indexación, particionamiento (sharding), replicación, respaldos y bases vectoriales para IA.',
+        tech: ['PostgreSQL & MySQL', 'SQL Server & Oracle', 'MongoDB & Cassandra', 'Redis', 'Bases Vectoriales (pgvector / Milvus)'],
+        connection: 'Soporta al Backend, a TI y provee la materia prima para Ingeniería y Ciencia de Datos.'
+      },
+      {
+        id: 'lowcode_rpa',
+        label: 'Desarrollo Low-Code\n& Automatización RPA',
+        title: 'Desarrollo Low-Code / No-Code y Automatización Robótica (RPA)',
+        category: 'software',
+        parent: 'apis_micro',
+        badge: 'Software • Agilidad Empresarial',
+        x: -1215,
+        y: -380,
+        w: 180,
+        h: 46,
+        color: '#6366f1',
+        description: 'Creación acelerada de herramientas internas, portales de negocio y robots de software (RPA) que automatizan flujos administrativos repetitivos conectando APIs y sistemas legados.',
+        tech: ['Microsoft Power Platform (PowerApps/Automate)', 'UiPath / Automation Anywhere', 'Retool / OutSystems', 'n8n / Make / Zapier'],
+        connection: 'Conecta el Desarrollo de Software y APIs con la eficiencia operativa del núcleo TI.'
+      },
+      {
+        id: 'blockchain',
+        label: 'Blockchain, Web3 &\nSmart Contracts',
+        title: 'Desarrollo Blockchain, Web3 y Contratos Inteligentes',
+        category: 'software',
+        parent: 'distribuidos',
+        badge: 'Software • Descentralización y Criptografía',
+        x: -1215,
+        y: 5,
+        w: 180,
+        h: 46,
+        color: '#818cf8',
+        description: 'Programación de aplicaciones descentralizadas (dApps), contratos inteligentes autoejecutables e infraestructura de registro distribuido inmutable basada en criptografía.',
+        tech: ['Solidity (Ethereum / EVM)', 'Rust (Solana / Polkadot)', 'Hardhat & Foundry', 'Web3.js / Ethers.js', 'Auditoría de Smart Contracts'],
+        connection: 'Combina Sistemas Distribuidos con Criptografía y Seguridad de Aplicaciones (AppSec).'
+      },
+      {
+        id: 'vision_nlp',
+        label: 'Visión Artificial &\nLenguaje (NLP)',
+        title: 'Visión por Computadora (Computer Vision) y Procesamiento de Lenguaje Natural (NLP)',
+        category: 'software',
+        parent: 'ia',
+        badge: 'IA • Percepción Visual y Lingüística',
+        x: -1215,
+        y: 230,
+        w: 180,
+        h: 46,
+        color: '#a855f7',
+        description: 'Ramas de la IA que permiten a las computadoras interpretar imágenes/video en tiempo real (detección de objetos, biometría, OCR, conducción autónoma) y comprender o traducir el idioma humano.',
+        tech: ['OpenCV & YOLO', 'Hugging Face Transformers', 'Reconocimiento de Voz (ASR / TTS)', 'Segmentación de Imágenes', 'Modelos Multimodales'],
+        connection: 'Conecta la Inteligencia Artificial con la Robótica, IoT, Dispositivos Móviles y Seguridad.'
+      },
+      {
+        id: 'mlops',
+        label: 'MLOps & Ingeniería\nde IA / LLMs',
+        title: 'MLOps e Ingeniería de IA en Producción (AI Engineering)',
+        category: 'software',
+        parent: 'ia',
+        badge: 'IA + DevOps • Modelos a Escala',
+        x: -1215,
+        y: 320,
+        w: 180,
+        h: 46,
+        color: '#a855f7',
+        description: 'Llevar modelos de Machine Learning y LLMs del laboratorio a producción: arquitecturas RAG, ajuste fino (Fine-Tuning), versionado de datasets/modelos, servidores de inferencia de baja latencia y monitoreo de deriva (Model Drift).',
+        tech: ['MLflow / Weights & Biases', 'LangChain / LlamaIndex (RAG)', 'vLLM / NVIDIA Triton', 'Kubeflow', 'Cuantización y Optimización de Modelos'],
+        connection: 'Puente directo entre Inteligencia Artificial, DevOps e Ingeniería Cloud.'
+      },
+      {
+        id: 'datos',
+        label: 'Ciencia / Analista\nde Datos',
+        title: 'Ciencia y Analista de Datos (Data Science & Analytics)',
+        category: 'software',
+        parent: 'ingenieria_datos',
+        badge: 'Datos • Estadística, BI y Predicción',
+        x: -1215,
+        y: 415,
+        w: 180,
+        h: 48,
+        color: '#a855f7',
+        description: 'Análisis estadístico, minería de datos, experimentación A/B y creación de modelos predictivos y tableros ejecutivos para transformar datos crudos en decisiones estratégicas.',
+        tech: ['Python (Pandas, NumPy, SciPy)', 'SQL Analítico', 'Power BI / Tableau', 'R', 'Jupyter Notebooks', 'Modelado Estadístico'],
+        connection: 'Trabaja mano a mano con Ingeniería de Datos e Inteligencia Artificial.'
+      },
+      {
+        id: 'performance_eng',
+        label: 'Ing. de Rendimiento\n(Performance)',
+        title: 'Ingeniería de Rendimiento, Carga y Optimización de Software',
+        category: 'software',
+        parent: 'testing',
+        badge: 'Calidad • Velocidad y Escalabilidad',
+        x: -1215,
+        y: 510,
+        w: 180,
+        h: 46,
+        color: '#6366f1',
+        description: 'Análisis profundo de cuellos de botella en CPU, memoria RAM, red y consultas de base de datos bajo tráfico extremo para lograr tiempos de respuesta de milisegundos.',
+        tech: ['k6 / Apache JMeter / Gatling', 'Profiling (Flamegraphs / pprof)', 'Optimización de Algoritmos y Caché', 'Pruebas de Estrés, Pico y Soak'],
+        connection: 'Une el Testing de Software con la Arquitectura Distribuida y el equipo SRE de Sistemas.'
+      },
+
+      // ==========================================
+      // 3. PILAR DERECHO SUPERIOR: INGENIERÍA EN SISTEMAS COMPUTACIONALES (20 NODOS)
+      // ==========================================
+      {
+        id: 'sys_hub',
+        label: 'ING. EN SISTEMAS\nCOMPUTACIONALES',
+        title: 'Rama Principal: Ingeniería en Sistemas Computacionales (20 Áreas + 17 de Ciberseguridad)',
+        category: 'sistemas',
+        parent: 'core',
+        badge: 'Pilar 2 • Infraestructura, Hardware, Nube y Seguridad',
+        x: 340,
+        y: -210,
+        w: 205,
+        h: 60,
+        isHub: true,
+        color: '#10b981',
+        grad: 'url(#gradSys)',
+        description: 'Rama encargada de la arquitectura física y lógica que sostiene al mundo digital: desde el diseño de microprocesadores, FPGAs y kernels de sistemas operativos hasta redes globales, computación en la nube, supercomputación (HPC), robótica industrial y ciberseguridad.',
+        tech: ['Redes TCP/IP & SDN', 'Linux Kernel & Windows Server', 'Cloud, SRE & HPC', 'Arquitectura de CPU, FPGAs & IoT', 'Ciberseguridad'],
+        connection: 'Proporciona el silicio, la red, la nube y el blindaje donde se ejecuta todo el Software.'
+      },
+
+      // --- Columna Sistemas 1 (x = 635) ---
+      {
+        id: 'redes',
+        label: 'Ingeniería de Redes',
+        title: 'Ingeniería de Redes Corporativas y de Proveedores (ISP)',
+        category: 'sistemas',
+        parent: 'sys_hub',
+        badge: 'Conectividad • Routing & Switching',
+        x: 635,
+        y: -650,
+        w: 175,
+        h: 44,
+        color: '#10b981',
+        description: 'Diseño, configuración y mantenimiento de redes de datos locales (LAN), de campus y globales (WAN), asegurando el enrutamiento eficiente, segmentación y disponibilidad del tráfico.',
+        tech: ['Cisco (CCNA/CCNP) / Juniper', 'Modelo OSI & TCP/IP (IPv4/IPv6)', 'OSPF, BGP & MPLS', 'VLANs, VPNs & NAC', 'Firewalls Perimetrales', 'Wireshark'],
+        connection: 'Base sobre la que operan las Telecomunicaciones, las Redes SDN y la Nube.'
+      },
+      {
+        id: 'devops',
+        label: 'DevOps',
+        title: 'DevOps (Integración entre Desarrollo y Operaciones)',
+        category: 'sistemas',
+        parent: 'sys_hub',
+        badge: 'CI/CD, Contenedores e IaC',
+        x: 635,
+        y: -550,
+        w: 175,
+        h: 44,
+        color: '#14b8a6',
+        description: 'Cultura e ingeniería que une el desarrollo de software con la operación de sistemas para automatizar la compilación, prueba, contenedorización y despliegue continuo.',
+        tech: ['Docker', 'Kubernetes (K8s)', 'CI/CD (GitHub Actions, GitLab CI, Jenkins)', 'Terraform / OpenTofu (IaC)', 'Helm & ArgoCD (GitOps)'],
+        connection: 'Gran puente entre Software y Sistemas; da origen a SRE e Ingeniería de Plataformas.'
+      },
+      {
+        id: 'cloud',
+        label: 'Ingeniería Cloud',
+        title: 'Ingeniería Cloud (Arquitectura en la Nube)',
+        category: 'sistemas',
+        parent: 'sys_hub',
+        badge: 'Infraestructura Escalable Global',
+        x: 635,
+        y: -450,
+        w: 175,
+        h: 44,
+        color: '#14b8a6',
+        description: 'Diseño y gestión de infraestructura virtualizada bajo demanda (cómputo, bases de datos, redes, almacenamiento y serverless) en nubes públicas, privadas o híbridas.',
+        tech: ['AWS (Amazon Web Services)', 'Microsoft Azure', 'Google Cloud (GCP)', 'Serverless / AWS Lambda', 'Redes VPC & Balanceadores'],
+        connection: 'Se extiende hacia FinOps/Multi-Cloud, DevSecOps y se audita con Cloud Red Teaming.'
+      },
+      {
+        id: 'sysadmin',
+        label: 'Administración de\nServicios y SO',
+        title: 'Administración de Servicios y Sistemas Operativos (SysAdmin)',
+        category: 'sistemas',
+        parent: 'sys_hub',
+        badge: 'Servidores, Servicios y Directorios',
+        x: 635,
+        y: -350,
+        w: 180,
+        h: 46,
+        color: '#10b981',
+        description: 'Instalación, configuración, optimización y mantenimiento de servidores Linux/Windows, servicios críticos de red (DNS, DHCP, correo, servidores web) y políticas de sistema.',
+        tech: ['Linux (RHEL, Ubuntu, Debian)', 'Windows Server', 'Nginx / Apache / HAProxy', 'DNS (Bind), DHCP, LDAP, Kerberos', 'Monitoreo (Zabbix / Nagios)'],
+        connection: 'Pilar operativo de TI, de los Data Centers, del Kernel y de Active Directory.'
+      },
+      {
+        id: 'automatizacion',
+        label: 'Automatización',
+        title: 'Automatización de Infraestructura y Sistemas',
+        category: 'sistemas',
+        parent: 'sys_hub',
+        badge: 'Scripting y Gestión de Configuración',
+        x: 635,
+        y: -250,
+        w: 175,
+        h: 44,
+        color: '#10b981',
+        description: 'Eliminación de tareas operativas manuales mediante scripts de sistema, aprovisionamiento desatendido, configuración declarativa de flotas de servidores y orquestación.',
+        tech: ['Bash & Shell Scripting', 'PowerShell', 'Python para Administración', 'Ansible / SaltStack / Puppet', 'Cloud-init & Packer'],
+        connection: 'Acelera el trabajo de TI, SysAdmin, DevOps y Respuesta a Incidentes (SOAR).'
+      },
+      {
+        id: 'embebidos',
+        label: 'Sistemas Embebidos',
+        title: 'Sistemas Embebidos (Embedded Systems & Firmware)',
+        category: 'sistemas',
+        parent: 'sys_hub',
+        badge: 'Hardware, Microcontroladores y RTOS',
+        x: 635,
+        y: -150,
+        w: 175,
+        h: 44,
+        color: '#10b981',
+        description: 'Diseño y programación de sistemas computacionales dedicados integrados dentro de hardware electrónico (automotriz, médico, industrial, aeroespacial y electrónica de consumo).',
+        tech: ['C / C++ / Rust Embedded', 'ARM Cortex / STM32 / ESP32 / PIC', 'Arduino & Raspberry Pi', 'RTOS (FreeRTOS / Zephyr)', 'I2C, SPI, UART, CAN Bus'],
+        connection: 'Conecta la Arquitectura de Computadoras con el IoT, la Robótica y los Sistemas Industriales (OT).'
+      },
+
+      // --- Columna Sistemas 2 (x = 925) ---
+      {
+        id: 'telecom',
+        label: 'Telecomunicaciones',
+        title: 'Ingeniería en Telecomunicaciones y Transmisión de Datos',
+        category: 'sistemas',
+        parent: 'redes',
+        badge: 'Fibra Óptica, 5G y Espectro RF',
+        x: 925,
+        y: -665,
+        w: 175,
+        h: 42,
+        color: '#10b981',
+        description: 'Despliegue de sistemas de transmisión de voz, datos y video a larga distancia mediante fibra óptica, enlaces de microondas, satélites y redes celulares.',
+        tech: ['Fibra Óptica (GPON / DWDM)', 'Redes Celulares 4G LTE / 5G', 'Radiofrecuencia y Antenas', 'Telefonía IP (VoIP / SIP / Asterisk)', 'Procesamiento Digital de Señales'],
+        connection: 'Extiende la Ingeniería de Redes hacia los medios físicos e inalámbricos globales.'
+      },
+      {
+        id: 'sdn_wireless',
+        label: 'Redes SDN, SD-WAN\n& Inalámbricas',
+        title: 'Redes Definidas por Software (SDN), SD-WAN y Redes Inalámbricas Avanzadas',
+        category: 'sistemas',
+        parent: 'redes',
+        badge: 'Redes Programables y Wi-Fi de Alta Densidad',
+        x: 925,
+        y: -595,
+        w: 180,
+        h: 44,
+        color: '#10b981',
+        description: 'Separación del plano de control y el plano de datos para programar el comportamiento de la red mediante software/APIs, junto al diseño de redes Wi-Fi corporativas de alta densidad.',
+        tech: ['OpenFlow & Controladores SDN', 'Cisco ACI / VMware NSX', 'SD-WAN & SASE', 'Wi-Fi 6 / Wi-Fi 7 (802.11be)', 'Automatización de Redes (NetDevOps)'],
+        connection: 'Une la Ingeniería de Redes tradicional con la programación de Software y la Nube.'
+      },
+      {
+        id: 'sre',
+        label: 'SRE (Confiabilidad\nde Sitios)',
+        title: 'SRE (Site Reliability Engineering / Ingeniería de Confiabilidad)',
+        category: 'sistemas',
+        parent: 'devops',
+        badge: 'Alta Disponibilidad & Observabilidad',
+        x: 925,
+        y: -520,
+        w: 180,
+        h: 44,
+        color: '#14b8a6',
+        description: 'Aplicación de la ingeniería de software a las operaciones para garantizar que plataformas masivas operen 24/7 con latencia mínima, autoescalado y presupuestos de error controlados.',
+        tech: ['SLIs / SLOs / SLAs & Error Budgets', 'Prometheus, Grafana & OpenTelemetry', 'Datadog / Elastic Stack (ELK)', 'Chaos Engineering', 'Respuesta Operativa On-Call'],
+        connection: 'Evolución de DevOps enfocada en resiliencia, observabilidad y rendimiento.'
+      },
+      {
+        id: 'platform_eng',
+        label: 'Ing. de Plataformas\n(Platform Eng)',
+        title: 'Ingeniería de Plataformas (Internal Developer Platforms / IDP)',
+        category: 'sistemas',
+        parent: 'devops',
+        badge: 'Productividad de Desarrolladores',
+        x: 925,
+        y: -445,
+        w: 180,
+        h: 44,
+        color: '#14b8a6',
+        description: 'Creación de plataformas internas de autoservicio ("Golden Paths") para que los ingenieros de software puedan crear entornos, bases de datos y despliegues en minutos sin fricción.',
+        tech: ['Backstage (Spotify)', 'Crossplane', 'Portales Internos de Desarrollador (IDP)', 'Kubernetes Operators', 'Estandarización de Infraestructura'],
+        connection: 'Conecta directamente al equipo de DevOps/Cloud con todos los equipos de Ingeniería de Software.'
+      },
+      {
+        id: 'devsecops',
+        label: 'DevSecOps',
+        title: 'DevSecOps (Seguridad Automatizada en CI/CD y Nube)',
+        category: 'sistemas',
+        parent: 'cloud',
+        badge: 'Seguridad Integrada en el Pipeline',
+        x: 925,
+        y: -370,
+        w: 180,
+        h: 42,
+        color: '#14b8a6',
+        description: 'Integración de controles de seguridad automatizados desde el código hasta la nube: escaneo de imágenes Docker, gestión de secretos, validación de IaC y cumplimiento continuo.',
+        tech: ['Trivy / Snyk / Clair', 'HashiCorp Vault (Gestión de Secretos)', 'Checkov / tfsec (Seguridad IaC)', 'Falco (Seguridad Runtime en K8s)', 'SBOM (Software Bill of Materials)'],
+        connection: 'Puente directo entre DevOps/Cloud y la rama de Ciberseguridad (AppSec y Blue Team).'
+      },
+      {
+        id: 'virtualizacion',
+        label: 'Virtualización &\nData Centers',
+        title: 'Virtualización, Centros de Datos y Almacenamiento Empresarial (SAN/NAS)',
+        category: 'sistemas',
+        parent: 'sysadmin',
+        badge: 'Hipervisores e Infraestructura Física',
+        x: 925,
+        y: -295,
+        w: 180,
+        h: 44,
+        color: '#10b981',
+        description: 'Diseño y operación de centros de datos (Data Centers): clústeres de virtualización, redes de área de almacenamiento de alta velocidad (Fibre Channel/iSCSI) y enfriamiento/energía.',
+        tech: ['VMware vSphere / ESXi', 'Proxmox VE / KVM / Nutanix', 'SAN / NAS / ZFS / Ceph', 'Norma ANSI/TIA-942 (Tier I a IV)', 'Redes de Data Center (Spine-Leaf)'],
+        connection: 'Sostiene físicamente la nube privada, la supercomputación (HPC) y los planes DRP.'
+      },
+      {
+        id: 'kernel_os',
+        label: 'Kernel, Drivers y\nSO de Bajo Nivel',
+        title: 'Sistemas Operativos de Bajo Nivel, Desarrollo de Kernel y Drivers',
+        category: 'sistemas',
+        parent: 'sysadmin',
+        badge: 'Sistemas • Programación de Sistema',
+        x: 925,
+        y: -220,
+        w: 180,
+        h: 44,
+        color: '#10b981',
+        description: 'Programación en el corazón del sistema operativo (Ring 0): desarrollo de módulos del kernel, controladores de hardware (drivers), gestión de memoria virtual, sistemas de archivos y trazado con eBPF.',
+        tech: ['Linux Kernel (C / Rust)', 'Windows Kernel-Mode Drivers (WDF)', 'eBPF (Observabilidad y Red en Kernel)', 'Planificadores de CPU & Memoria Virtual', 'Llamadas al Sistema (Syscalls) & POSIX'],
+        connection: 'Une la Administración de SO con los Sistemas Embebidos, Compiladores y el Análisis de Malware.'
+      },
+      {
+        id: 'arq_computadoras',
+        label: 'Arquitectura de\nComputadoras y CPU',
+        title: 'Arquitectura de Computadoras, Microprocesadores y Organización Digital',
+        category: 'sistemas',
+        parent: 'embebidos',
+        badge: 'Sistemas • Silicio, CPU y Memoria',
+        x: 925,
+        y: -145,
+        w: 180,
+        h: 44,
+        color: '#10b981',
+        description: 'Diseño interno de los procesadores y sistemas de cómputo: repertorio de instrucciones (ISA), unidades aritmético-lógicas (ALU), segmentación (pipelining), jerarquía de memoria caché y buses de alta velocidad.',
+        tech: ['Arquitecturas x86_64, ARM y RISC-V', 'Lenguaje Ensamblador (Assembly)', 'Jerarquía de Caché (L1/L2/L3) & RAM', 'Pipelining & Ejecución Fuera de Orden', 'PCIe, NVMe & Buses de Sistema'],
+        connection: 'Fundamento físico de toda la carrera; se extiende hacia FPGAs/Diseño Digital y HPC.'
+      },
+
+      // --- Columna Sistemas 3 (x = 1215) ---
+      {
+        id: 'finops_multicloud',
+        label: 'FinOps & Arquitectura\nMulti-Cloud / Híbrida',
+        title: 'FinOps, Gobernanza en la Nube y Arquitectura Multi-Cloud / Híbrida',
+        category: 'sistemas',
+        parent: 'cloud',
+        badge: 'Cloud • Optimización y Estrategia',
+        x: 1215,
+        y: -460,
+        w: 185,
+        h: 46,
+        color: '#14b8a6',
+        description: 'Integración simultánea de múltiples proveedores de nube (AWS + Azure + GCP) con el centro de datos local, optimizando el gasto financiero en la nube (FinOps) sin sacrificar rendimiento.',
+        tech: ['FinOps Framework (Optimización de Costos)', 'Arquitectura Híbrida (AWS Direct Connect / ExpressRoute)', 'Kubernetes Multi-Clúster', 'Gobernanza de Recursos Cloud'],
+        connection: 'Conecta la Ingeniería Cloud con la gestión financiera de TI y GRC.'
+      },
+      {
+        id: 'drp_ha',
+        label: 'Alta Disponibilidad\ny Recuperación (DRP)',
+        title: 'Continuidad Operativa, Alta Disponibilidad (HA) y Recuperación ante Desastres (DRP)',
+        category: 'sistemas',
+        parent: 'virtualizacion',
+        badge: 'Sistemas • Resiliencia e Inmutabilidad',
+        x: 1215,
+        y: -365,
+        w: 185,
+        h: 46,
+        color: '#10b981',
+        description: 'Diseño de infraestructuras que sobreviven a apagones, fallos de centros de datos o ataques de ransomware mediante replicación geográfica activa-activa, respaldos inmutables (Regla 3-2-1-1) y conmutación automática.',
+        tech: ['Objetivos RPO y RTO', 'Veeam / Commvault / Rubrik', 'Backups Inmutables & Air-Gapped', 'Clústeres Activo-Activo / Failover', 'Simulacros de Desastre (DR Drills)'],
+        connection: 'Vital para Virtualización, TI, GRC y para la recuperación en Respuesta a Incidentes (IR).'
+      },
+      {
+        id: 'hpc',
+        label: 'Supercomputación\ny HPC (Clusters GPU)',
+        title: 'Computación de Alto Rendimiento (HPC), Clústeres Científicos y GPUs',
+        category: 'sistemas',
+        parent: 'virtualizacion',
+        badge: 'Sistemas • Supercómputo e IA Masiva',
+        x: 1215,
+        y: -275,
+        w: 185,
+        h: 46,
+        color: '#14b8a6',
+        description: 'Construcción y programación de supercomputadoras y clústeres de miles de nodos CPU/GPU interconectados a ultrabaja latencia para simulaciones científicas, clima, física y entrenamiento de modelos de IA.',
+        tech: ['NVIDIA CUDA & OpenCL', 'MPI (Message Passing Interface) & OpenMP', 'Orquestador Slurm', 'Redes InfiniBand & RoCE (RDMA)', 'Sistemas de Archivos Paralelos (Lustre/BeeGFS)'],
+        connection: 'Proporciona el músculo computacional para entrenar la Inteligencia Artificial y el Big Data.'
+      },
+      {
+        id: 'fpga_hardware',
+        label: 'Diseño Digital,\nFPGAs y Hardware',
+        title: 'Diseño de Sistemas Digitales, FPGAs y Hardware Electrónico',
+        category: 'sistemas',
+        parent: 'arq_computadoras',
+        badge: 'Hardware • Lógica Programable y PCB',
+        x: 1215,
+        y: -190,
+        w: 185,
+        h: 46,
+        color: '#10b981',
+        description: 'Descripción de hardware a nivel de compuertas lógicas para configurar circuitos integrados programables (FPGAs), aceleradores de hardware a medida y diseño de placas electrónicas (PCB).',
+        tech: ['VHDL / Verilog / SystemVerilog', 'FPGAs (Xilinx/AMD & Intel/Altera)', 'Diseño de PCB (KiCad / Altium)', 'Aceleración por Hardware', 'Instrumentación (Osciloscopio / Analizador Lógico)'],
+        connection: 'Lleva la Arquitectura de Computadoras y los Sistemas Embebidos al nivel del hardware puro.'
+      },
+      {
+        id: 'iot_robotica',
+        label: 'IoT y Robótica',
+        title: 'Internet de las Cosas (IoT), Edge Computing y Robótica Autónoma',
+        category: 'sistemas',
+        parent: 'embebidos',
+        badge: 'Sensores Conectados y Robots',
+        x: 1215,
+        y: -110,
+        w: 185,
+        h: 42,
+        color: '#10b981',
+        description: 'Interconexión de dispositivos físicos inteligentes, redes de sensores inalámbricos y robots autónomos que procesan datos en el borde (Edge) e interactúan con el mundo físico.',
+        tech: ['MQTT / CoAP / LoRaWAN / Zigbee', 'ROS 2 (Robot Operating System)', 'Edge AI (NVIDIA Jetson)', 'Cinemática, Sensores LiDAR y Actuadores'],
+        connection: 'Une los Sistemas Embebidos con Telecomunicaciones, Visión por Computadora y Control Industrial.'
+      },
+      {
+        id: 'ot_scada',
+        label: 'Control Industrial\n(OT / SCADA / PLC)',
+        title: 'Sistemas de Control Industrial (ICS), Automatización OT, SCADA y PLCs',
+        category: 'sistemas',
+        parent: 'iot_robotica',
+        badge: 'Sistemas • Industria 4.0 e Infraestructura Crítica',
+        x: 1215,
+        y: -35,
+        w: 185,
+        h: 46,
+        color: '#10b981',
+        description: 'Ingeniería de sistemas que controlan procesos físicos en plantas automotrices, redes eléctricas, manufactura y agua: programación de PLCs, supervisión SCADA y convergencia segura entre redes IT y OT.',
+        tech: ['PLCs (Siemens / Allen-Bradley)', 'Sistemas SCADA & HMI', 'Protocolos Industriales (Modbus, PROFINET, OPC-UA)', 'Convergencia IT/OT & Norma ISA/IEC 62443'],
+        connection: 'Muy demandado en la industria manufacturera y automotriz; conecta Sistemas Embebidos, Redes y Ciberseguridad Industrial.'
+      },
+
+      // ==========================================
+      // 4. RAMA EXPANDIDA: CIBERSEGURIDAD (17 NODOS)
+      // ==========================================
+      {
+        id: 'cyber_hub',
+        label: 'CIBERSEGURIDAD\n(Área Expandida)',
+        title: 'Ciberseguridad (Especialidad Expandida • 17 Áreas)',
+        category: 'cyber',
+        parent: 'sys_hub',
+        badge: 'Defensa, Ofensiva, Purple Team y GRC',
+        x: 490,
+        y: 290,
+        w: 195,
+        h: 60,
+        isHub: true,
+        color: '#f43f5e',
+        grad: 'url(#gradCyber)',
+        description: 'Protección integral de sistemas, redes, aplicaciones, nube y factor humano. Incluye Blue Team (Forense, IR, Malware, SOC, Threat Hunting), Gobierno/Riesgo/Cumplimiento (GRC), Modelado de Amenazas, Purple Team (Ejecución de TTPs) y Red Team / Pentesting.',
+        tech: ['Tríada CIA', 'MITRE ATT&CK & D3FEND', 'Zero Trust Architecture', 'Criptografía Aplicada', 'Defensa en Profundidad'],
+        connection: 'Rama de Sistemas que protege y audita tanto la infraestructura como el Software y TI.'
+      },
+
+      // --- Columna Cyber 1 (x = 765) ---
+      {
+        id: 'blue_team',
+        label: 'Blue Team\n(Seguridad Defensiva)',
+        title: 'Blue Team (Arquitectura y Operaciones de Defensa)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad • Rama Madre Defensiva',
+        x: 765,
+        y: 95,
+        w: 185,
+        h: 50,
+        isHub: true,
+        color: '#0ea5e9',
+        grad: 'url(#gradBlue)',
+        description: 'Ecosistema defensivo encargado de blindar la infraestructura (hardening), monitorear amenazas 24/7, responder ante incidentes críticos, analizar malware y realizar investigaciones forenses.',
+        tech: ['Hardening (CIS Benchmarks)', 'EDR / XDR / NDR', 'SIEM & SOAR', 'Segmentación y Zero Trust', 'Gestión de Parches y Vulnerabilidades'],
+        connection: 'Agrupa al SOC Analyst, Respuesta a Incidentes (IR), Informática Forense, Analista de Malware y Threat Hunting.'
+      },
+      {
+        id: 'purple_team',
+        label: 'Purple Team',
+        title: 'Purple Team (Sinergia Ofensiva + Defensiva)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad • Colaboración Red + Blue',
+        x: 765,
+        y: 255,
+        w: 180,
+        h: 44,
+        color: '#a855f7',
+        description: 'Metodología colaborativa donde atacantes (Red Team) y defensores (Blue Team) trabajan juntos de forma transparente para probar controles, afinar la telemetría del EDR/SIEM y medir la efectividad real de la detección.',
+        tech: ['Ingeniería de Detección (Detection Engineering)', 'Validación de Controles', 'Mapeo MITRE ATT&CK Navigator', 'Calibración de SIEM/EDR', 'Ejercicios Conjuntos'],
+        connection: 'Conecta al Red Team con el Blue Team a través de la Ejecución Controlada de TTPs.'
+      },
+      {
+        id: 'grc',
+        label: 'Gobierno, Riesgo y\nCumplimiento (GRC)',
+        title: 'Gobierno, Riesgo y Cumplimiento (GRC)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad • Estrategia, Leyes y Normativas',
+        x: 765,
+        y: 350,
+        w: 185,
+        h: 48,
+        color: '#f59e0b',
+        description: 'Alineación de la ciberseguridad con la dirección de la empresa: creación de políticas de seguridad, análisis y matriz de riesgos, cumplimiento de leyes de privacidad de datos y auditorías de certificación internacional.',
+        tech: ['ISO/IEC 27001 & 27002', 'NIST Cybersecurity Framework (CSF)', 'SOC 2 / PCI-DSS / HIPAA', 'Leyes de Protección de Datos (GDPR / LFPDPPP)', 'Continuidad de Negocio (BCP / DRP)'],
+        connection: 'Conecta Ciberseguridad directamente con la dirección de TI y el negocio.'
+      },
+      {
+        id: 'threat_modeling',
+        label: 'Modelado de\nAmenazas',
+        title: 'Modelado de Amenazas (Threat Modeling & Security Architecture)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad • Seguridad desde el Diseño',
+        x: 765,
+        y: 445,
+        w: 185,
+        h: 48,
+        color: '#ec4899',
+        description: 'Análisis proactivo de la arquitectura de un software o infraestructura para identificar activos críticos, superficie de ataque, flujos de datos y posibles amenazas antes de que el sistema sea construido o desplegado.',
+        tech: ['Metodología STRIDE & DREAD', 'PASTA & OCTAVE', 'OWASP Threat Dragon / Microsoft Threat Modeling Tool', 'Árboles de Ataque (Attack Trees)', 'Security by Design'],
+        connection: 'Puente directo entre Arquitectura de Software, Vulnerabilidades Web (AppSec) y GRC.'
+      },
+      {
+        id: 'red_team',
+        label: 'Red Team',
+        title: 'Red Team (Operaciones Ofensivas y Simulación de Adversarios)',
+        category: 'cyber',
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad • Ofensiva Avanzada',
+        x: 765,
+        y: 545,
+        w: 180,
+        h: 44,
+        color: '#f43f5e',
+        description: 'Simulación realista de adversarios avanzados (APT) con objetivos específicos: intrusión inicial, evasión de defensas (AV/EDR), persistencia, movimiento lateral sigiloso y exfiltración.',
+        tech: ['C2 Frameworks (Cobalt Strike, Sliver, Mythic)', 'Evasión de EDR / AMSI Bypass', 'Movimiento Lateral y Pivoting', 'OPSEC', 'Operaciones Físicas, Lógicas y Sociales'],
+        connection: 'Desafía al Blue Team y colabora con el Purple Team en la ejecución de TTPs.'
+      },
+      {
+        id: 'pentesting',
+        label: 'Pentesting',
+        title: 'Pentesting (Pruebas de Penetración)',
+        category: 'cyber',
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad • Auditoría Ofensiva',
+        x: 765,
+        y: 640,
+        w: 180,
+        h: 44,
+        color: '#f43f5e',
+        description: 'Evaluación autorizada y exhaustiva (caja negra, gris o blanca) para identificar y explotar de forma controlada todas las vulnerabilidades posibles en redes, servidores o aplicaciones y entregar un informe de remediación.',
+        tech: ['Nmap & Masscan', 'Metasploit Framework', 'NetExec / CrackMapExec', 'Hashcat & John the Ripper', 'Metodologías PTES / OSSTMM / OWASP'],
+        connection: 'Audita la seguridad de Sistemas, Redes, Active Directory y Software.'
+      },
+
+      // --- Columna Cyber 2 (x = 1065) ---
+      {
+        id: 'soc_analyst',
+        label: 'SOC Analyst',
+        title: 'SOC Analyst (Analista de Centro de Operaciones de Seguridad)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'blue_team',
+        badge: 'Blue Team • Monitoreo y Detección N1-N3',
+        x: 1065,
+        y: 55,
+        w: 180,
+        h: 42,
+        color: '#38bdf8',
+        description: 'Vigilancia continua en tiempo real de los eventos de seguridad: triaje de alertas, correlación de logs en el SIEM, análisis de tráfico sospechoso y escalamiento o contención inicial.',
+        tech: ['SIEM (Splunk, Sentinel, Wazuh, QRadar)', 'EDR (CrowdStrike, Defender)', 'SOAR Playbooks', 'Triaje de Alertas', 'Análisis de Logs y PCAPs'],
+        connection: 'Primera línea de detección del Blue Team; escala incidentes complejos al equipo de IR y Forense.'
+      },
+      {
+        id: 'incident_response',
+        label: 'Respuesta a\nIncidentes (IR)',
+        title: 'Especialista en Respuesta a Incidentes (IR / CSIRT)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'blue_team',
+        badge: 'Blue Team • Gestión de Crisis y Contención',
+        x: 1065,
+        y: 121,
+        w: 180,
+        h: 44,
+        color: '#38bdf8',
+        description: 'Equipo de choque cuando ocurre un ciberataque o ransomware: lidera la preparación, identificación, contención inmediata (aislar hosts/cuentas), erradicación del adversario, recuperación operativa y post-mortem.',
+        tech: ['Ciclo NIST SP 800-61 / SANS IR', 'Velociraptor / GRR', 'Contención de Ransomware', 'Erradicación y Remediación', 'Coordinación de Crisis (CSIRT)'],
+        connection: 'Trabaja codo a codo con Informática Forense, Analista de Malware y el equipo de TI/SysAdmin.'
+      },
+      {
+        id: 'forense',
+        label: 'Informática Forense\n(DFIR)',
+        title: 'Informática Forense (Digital Forensics / DFIR)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'blue_team',
+        badge: 'Blue Team • Investigación y Evidencia Digital',
+        x: 1065,
+        y: 187,
+        w: 180,
+        h: 44,
+        color: '#38bdf8',
+        description: 'Adquisición, preservación (cadena de custodia) y análisis científico de evidencia digital en discos duros, memoria RAM, registros del sistema, móviles y redes para reconstruir exactamente qué hizo un atacante o presentar pruebas periciales.',
+        tech: ['Autopsy / EnCase / FTK Imager', 'Volatility (Forense de Memoria RAM)', 'KAPE & Eric Zimmerman Tools', 'Análisis de Artefactos Windows/Linux', 'Cadena de Custodia y Peritaje'],
+        connection: 'Reconstruye la línea de tiempo del ataque para Respuesta a Incidentes (IR) y el área legal/GRC.'
+      },
+      {
+        id: 'malware_analyst',
+        label: 'Analista de Malware',
+        title: 'Analista de Malware e Ingeniería Inversa (Reverse Engineering)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'blue_team',
+        badge: 'Blue Team • Disección de Amenazas',
+        x: 1065,
+        y: 253,
+        w: 180,
+        h: 42,
+        color: '#38bdf8',
+        description: 'Disección de troyanos, ransomware, rootkits y loaders mediante análisis estático, dinámico en sandboxes y desensamblado de código para entender su comportamiento, extraer Indicadores de Compromiso (IOCs) y crear firmas de detección.',
+        tech: ['Ghidra / IDA Pro / Binary Ninja', 'x64dbg / WinDbg', 'ANY.RUN / Cuckoo Sandbox', 'PEStudio / Detect It Easy', 'Creación de Reglas YARA & CAPA'],
+        connection: 'Provee IOCs y firmas al SOC Analyst, Threat Hunting y Respuesta a Incidentes.'
+      },
+      {
+        id: 'threat_hunting',
+        label: 'Threat Hunting &\nInteligencia (CTI)',
+        title: 'Threat Hunting y Ciberinteligencia de Amenazas (CTI)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'blue_team',
+        badge: 'Blue Team • Caza Proactiva e Inteligencia',
+        x: 1065,
+        y: 319,
+        w: 180,
+        h: 44,
+        color: '#38bdf8',
+        description: 'Búsqueda proactiva basada en hipótesis dentro de la red para descubrir atacantes sigilosos que evadieron las alertas automáticas, apoyada en inteligencia sobre grupos APT, campañas y tácticas emergentes.',
+        tech: ['MISP / OpenCTI', 'Reglas Sigma & YARA', 'KQL / SPL Queries Avanzadas', 'Modelo Diamante & Cyber Kill Chain', 'Rastreo de Grupos APT'],
+        connection: 'Se retroalimenta con el Purple Team y la Ejecución Controlada de TTPs.'
+      },
+      {
+        id: 'ttps_execution',
+        label: 'Ejecución Controlada\nde TTPs',
+        title: 'Ejecución Controlada de TTPs (Adversary Emulation & BAS)',
+        category: 'cyber',
+        isBlue: true,
+        parent: 'purple_team',
+        badge: 'Purple Team • Emulación MITRE ATT&CK',
+        x: 1065,
+        y: 385,
+        w: 180,
+        h: 44,
+        color: '#a855f7',
+        description: 'Reproducción sistemática, segura y controlada de Tácticas, Técnicas y Procedimientos (TTPs) reales de adversarios para verificar empíricamente si las defensas bloquean la acción o generan la alerta esperada en el SOC.',
+        tech: ['Atomic Red Team', 'MITRE Caldera', 'VECTR (Purple Team Tracking)', 'Breach & Attack Simulation (BAS)', 'Pruebas de Telemetría Sysmon/EDR'],
+        connection: 'Eje operativo del Purple Team que entrena al SOC Analyst y valida las reglas de detección.'
+      },
+      {
+        id: 'appsec',
+        label: 'Vulnerabilidades\nWeb (AppSec)',
+        title: 'Vulnerabilidades Web y Seguridad de Aplicaciones (AppSec)',
+        category: 'cyber',
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad + Software',
+        x: 1065,
+        y: 451,
+        w: 180,
+        h: 44,
+        color: '#f43f5e',
+        description: 'Búsqueda, explotación y remediación de fallos de seguridad en aplicaciones web, móviles y APIs, acompañando a los desarrolladores con revisión de código seguro y pruebas dinámicas.',
+        tech: ['OWASP Top 10 (SQLi, XSS, CSRF, SSRF, IDOR)', 'Burp Suite Pro / OWASP ZAP', 'SAST / DAST / SCA', 'Auditoría de APIs REST, GraphQL y JWT'],
+        connection: 'Conexión directa entre Ciberseguridad, Modelado de Amenazas y Desarrollo Web/Móvil.'
+      },
+      {
+        id: 'osint',
+        label: 'OSINT',
+        title: 'OSINT (Open Source Intelligence / Inteligencia de Fuentes Abiertas)',
+        category: 'cyber',
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad • Reconocimiento e Investigación',
+        x: 1065,
+        y: 517,
+        w: 180,
+        h: 42,
+        color: '#fb7185',
+        description: 'Recolección y correlación de información pública en internet (DNS, subdominios, redes sociales, filtraciones de credenciales, metadatos y motores IoT) para mapear la huella digital de una organización.',
+        tech: ['Maltego', 'Shodan & Censys', 'Google Dorks', 'theHarvester & Amass', 'SpiderFoot', 'ExifTool (Metadatos)'],
+        connection: 'Fase inicial para Pentesting, Red Team, Ingeniería Social y Threat Intelligence.'
+      },
+      {
+        id: 'phishing',
+        label: 'Ingeniería Social /\nPhishing',
+        title: 'Ingeniería Social y Campañas de Phishing',
+        category: 'cyber',
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad • Factor Humano',
+        x: 1065,
+        y: 583,
+        w: 180,
+        h: 44,
+        color: '#fb7185',
+        description: 'Evaluación del factor humano mediante técnicas de persuasión psicológica y simulaciones de engaño (Spear Phishing, Vishing, Smishing o intrusión física) para medir y fortalecer la cultura de seguridad.',
+        tech: ['GoPhish', 'Evilginx (Adversary-in-the-Middle MFA)', 'Spear Phishing & Whaling', 'Vishing / Smishing / Pretexting', 'Programas de Concientización'],
+        connection: 'Usa datos de OSINT y suele ser el vector de acceso inicial hacia Active Directory o Cloud.'
+      },
+      {
+        id: 'active_directory',
+        label: 'Active Directory',
+        title: 'Seguridad Ofensiva y Defensiva en Active Directory (AD)',
+        category: 'cyber',
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad • Identidad Corporativa',
+        x: 1065,
+        y: 649,
+        w: 180,
+        h: 42,
+        color: '#f43f5e',
+        description: 'El corazón de la identidad en redes corporativas Windows: abarca tanto auditar rutas de escalada de privilegios en el dominio como proteger controladores de dominio, GPOs, Kerberos y certificados (AD CS).',
+        tech: ['BloodHound & SharpHound', 'Kerberoasting & AS-REP Roasting', 'Pass-the-Hash / Golden Ticket', 'Impacket, Rubeus & Mimikatz', 'Hardening de Tier 0 y GPOs'],
+        connection: 'Conecta directamente Ciberseguridad con Administración de Servicios/SO y TI.'
+      },
+      {
+        id: 'cloud_red_team',
+        label: 'Cloud Red Teaming',
+        title: 'Cloud Red Teaming (Seguridad Ofensiva en la Nube)',
+        category: 'cyber',
+        parent: 'cyber_hub',
+        badge: 'Ciberseguridad + Ingeniería Cloud',
+        x: 1065,
+        y: 715,
+        w: 180,
+        h: 42,
+        color: '#f43f5e',
+        description: 'Evaluación ofensiva de entornos AWS, Azure/Entra ID y GCP: explotación de permisos IAM excesivos, robo de tokens de identidad, abuso de arquitecturas serverless/contenedores y movimiento híbrido.',
+        tech: ['Pacu (AWS Exploitation)', 'AzureHound & ROADtools', 'Prowler & ScoutSuite', 'Abuso de IAM & Managed Identities', 'SSRF a Metadata (IMDS)'],
+        connection: 'Une el Red Team y Active Directory con la Ingeniería Cloud y DevSecOps.'
+      }
+    ];
+
+    // Cross-branch conceptual dashed links (showing how TI connects and hybrid bridges)
+    const EXTRA_LINKS = [
+      { from: 'ti', to: 'soft_hub', label: 'Soporte de Apps' },
+      { from: 'ti', to: 'sys_hub', label: 'Operación e Infra' },
+      { from: 'ti', to: 'cyber_hub', label: 'Políticas y Accesos' },
+      { from: 'arquitectura', to: 'threat_modeling', label: 'Security by Design' },
+      { from: 'ia', to: 'hpc', label: 'Cómputo GPU' }
+    ];
+
+    // State
+    let selectedNodeId = 'core';
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let currentTab = 'map';
+
+    // Pan & Zoom state for SVG viewBox
+    const DEFAULT_VB = { x: -1400, y: -740, w: 2800, h: 1560 };
+    let vb = { ...DEFAULT_VB };
+    let isPanning = false;
+    let panStart = { x: 0, y: 0 };
+
+    // DOM Elements
+    const svg = document.getElementById('mindmapSvg');
+    const linksLayer = document.getElementById('linksLayer');
+    const nodesLayer = document.getElementById('nodesLayer');
+    const detailContent = document.getElementById('detailContent');
+    const nodeCounterText = document.getElementById('nodeCounterText');
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const zoomLevelText = document.getElementById('zoomLevelText');
+
+    function getNodeById(id) {
+      return NODES.find(n => n.id === id);
+    }
+
+    function matchesSearchAndFilter(node) {
+      let matchesFilter = true;
+      if (currentFilter === 'all') {
+        matchesFilter = true;
+      } else if (currentFilter === 'blueteam') {
+        matchesFilter = Boolean(node.isBlue) || node.id === 'cyber_hub' || node.id === 'core';
+      } else {
+        matchesFilter =
+          node.category === currentFilter ||
+          (currentFilter === 'sistemas' && node.id === 'cyber_hub') ||
+          (currentFilter === 'cyber' && node.id === 'sys_hub') ||
+          node.id === 'core';
+      }
+
+      if (!searchQuery.trim()) return matchesFilter;
+
+      const q = searchQuery.toLowerCase().trim();
+      const textBlob = [
+        node.title,
+        node.label,
+        node.badge,
+        node.description,
+        ...(node.tech || [])
+      ].join(' ').toLowerCase();
+
+      return matchesFilter && textBlob.includes(q);
+    }
+
+    // Build curved cubic bezier path between two nodes
+    function buildCurvePath(n1, n2) {
+      const dx = n2.x - n1.x;
+      const cx1 = n1.x + dx * 0.45;
+      const cy1 = n1.y;
+      const cx2 = n1.x + dx * 0.55;
+      const cy2 = n2.y;
+      return `M ${n1.x} ${n1.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${n2.x} ${n2.y}`;
+    }
+
+    function renderMindMap() {
+      linksLayer.innerHTML = '';
+      nodesLayer.innerHTML = '';
+
+      // 1. Render Extra TI Bridge Dashed Links
+      EXTRA_LINKS.forEach(link => {
+        const n1 = getNodeById(link.from);
+        const n2 = getNodeById(link.to);
+        if (!n1 || !n2) return;
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M ${n1.x} ${n1.y} Q ${(n1.x + n2.x) / 2} ${n1.y + 45}, ${n2.x} ${n2.y}`);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', '#f59e0b');
+        path.setAttribute('stroke-width', '2');
+        path.setAttribute('stroke-dasharray', '5 5');
+        path.setAttribute('opacity', currentFilter === 'all' || currentFilter === 'ti' ? '0.45' : '0.1');
+        linksLayer.appendChild(path);
+      });
+
+      // 2. Render Hierarchical Parent->Child Links
+      NODES.forEach(node => {
+        if (!node.parent) return;
+        const parentNode = getNodeById(node.parent);
+        if (!parentNode) return;
+
+        const isVisible = matchesSearchAndFilter(node);
+        const isSelectedEdge = selectedNodeId === node.id || selectedNodeId === parentNode.id;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', buildCurvePath(parentNode, node));
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', node.color || '#64748b');
+        path.setAttribute('stroke-width', isSelectedEdge ? '3.5' : (node.isHub ? '3' : '2'));
+        path.setAttribute('opacity', isVisible ? (isSelectedEdge ? '0.95' : '0.55') : '0.08');
+        linksLayer.appendChild(path);
+      });
+
+      // 3. Render Nodes
+      NODES.forEach(node => {
+        const isMatched = matchesSearchAndFilter(node);
+        const isSelected = node.id === selectedNodeId;
+
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('transform', `translate(${node.x}, ${node.y})`);
+        g.setAttribute('class', `cursor-pointer node-transition ${node.id === 'core' || node.id === 'ti' ? 'glow-center' : ''}`);
+        g.style.opacity = isMatched ? '1' : '0.15';
+
+        // Outer Selection Ring if active
+        if (isSelected) {
+          const ring = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          ring.setAttribute('x', -node.w / 2 - 6);
+          ring.setAttribute('y', -node.h / 2 - 6);
+          ring.setAttribute('width', node.w + 12);
+          ring.setAttribute('height', node.h + 12);
+          ring.setAttribute('rx', '16');
+          ring.setAttribute('fill', 'none');
+          ring.setAttribute('stroke', '#ffffff');
+          ring.setAttribute('stroke-width', '2.5');
+          ring.setAttribute('stroke-dasharray', '4 3');
+          g.appendChild(ring);
+        }
+
+        // Main Card Rect
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', -node.w / 2);
+        rect.setAttribute('y', -node.h / 2);
+        rect.setAttribute('width', node.w);
+        rect.setAttribute('height', node.h);
+        rect.setAttribute('rx', node.isHub ? '14' : '10');
+        rect.setAttribute('filter', 'url(#shadowCard)');
+
+        if (node.isHub && node.grad) {
+          rect.setAttribute('fill', node.grad);
+          rect.setAttribute('stroke', '#ffffff');
+          rect.setAttribute('stroke-width', isSelected ? '2.5' : '1.2');
+        } else {
+          rect.setAttribute('fill', isSelected ? '#1e293b' : '#0f172a');
+          rect.setAttribute('stroke', node.color || '#6366f1');
+          rect.setAttribute('stroke-width', isSelected ? '2.8' : '1.8');
+        }
+        g.appendChild(rect);
+
+        // Left Accent Bar for leaf nodes
+        if (!node.isHub) {
+          const accent = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          accent.setAttribute('x', -node.w / 2 + 4);
+          accent.setAttribute('y', -node.h / 2 + 6);
+          accent.setAttribute('width', '4');
+          accent.setAttribute('height', node.h - 12);
+          accent.setAttribute('rx', '2');
+          accent.setAttribute('fill', node.color || '#6366f1');
+          g.appendChild(accent);
+        }
+
+        // Multi-line Label
+        const lines = node.label.split('\n');
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('fill', '#ffffff');
+        text.setAttribute('font-size', node.isHub ? '13' : '11.5');
+        text.setAttribute('font-weight', node.isHub ? '800' : '600');
+
+        const lineHeight = 14.5;
+        const startY = -((lines.length - 1) * lineHeight) / 2 + 4;
+
+        lines.forEach((line, i) => {
+          const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+          tspan.setAttribute('x', '0');
+          tspan.setAttribute('y', startY + i * lineHeight);
+          tspan.textContent = line;
+          text.appendChild(tspan);
+        });
+
+        g.appendChild(text);
+
+        g.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectNode(node.id);
+        });
+
+        nodesLayer.appendChild(g);
+      });
+    }
+
+    function selectNode(id) {
+      selectedNodeId = id;
+      const idx = NODES.findIndex(n => n.id === id);
+      const node = NODES[idx];
+      if (!node) return;
+
+      nodeCounterText.textContent = `Nodo ${idx + 1} de ${NODES.length}`;
+
+      const categoryColors = {
+        ti: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+        software: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
+        sistemas: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+        cyber: node.isBlue
+          ? 'bg-sky-500/20 text-sky-300 border-sky-500/40'
+          : 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+      };
+
+      const children = NODES.filter(n => n.parent === node.id);
+      const parentNode = node.parent ? getNodeById(node.parent) : null;
+
+      detailContent.innerHTML = `
+        <div class="space-y-4">
+          <div>
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${categoryColors[node.category] || ''}">
+              ${node.badge}
+            </span>
+            <h2 class="text-lg font-bold text-white mt-2 leading-snug">${node.title}</h2>
+            ${parentNode ? `
+              <button data-goto="${parentNode.id}" class="goto-node-btn mt-1 text-xs text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition">
+                <span>↑ Parte de: <strong>${parentNode.title}</strong></span>
+              </button>
+            ` : ''}
+          </div>
+
+          <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3.5">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">¿En qué consiste?</div>
+            <p class="text-xs text-slate-200 leading-relaxed">${node.description}</p>
+          </div>
+
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Tecnologías, Herramientas y Marcos</div>
+            <div class="flex flex-wrap gap-1.5">
+              ${(node.tech || []).map(t => `
+                <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 border border-slate-700 text-slate-200 text-xs font-medium">
+                  ${t}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-amber-400/90 mb-1">Conexión en el Mapa Mental</div>
+            <p class="text-xs text-slate-300 leading-relaxed">${node.connection}</p>
+          </div>
+
+          ${children.length > 0 ? `
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Ramas Conectadas (${children.length})</div>
+              <div class="grid grid-cols-1 gap-1.5 max-h-48 overflow-y-auto custom-scroll pr-1">
+                ${children.map(ch => `
+                  <button data-goto="${ch.id}" class="goto-node-btn text-left px-3 py-2 rounded-lg bg-slate-800/50 hover:bg-slate-800 border border-slate-700/60 text-xs text-slate-200 flex items-center justify-between transition">
+                    <span class="font-medium">${ch.title}</span>
+                    <span class="text-slate-400">→</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      detailContent.querySelectorAll('.goto-node-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-goto');
+          selectNode(targetId);
+          centerOnNode(targetId);
+        });
+      });
+
+      renderMindMap();
+      renderTreeView();
+    }
+
+    function centerOnNode(id) {
+      const node = getNodeById(id);
+      if (!node) return;
+      vb.x = node.x - vb.w / 2;
+      vb.y = node.y - vb.h / 2;
+      updateViewBox();
+    }
+
+    function renderTreeView() {
+      const container = document.getElementById('treeContainer');
+      const sections = [
+        {
+          key: 'ti',
+          title: '1. Núcleo Central: Tu Carrera + TI (Tecnologías de la Información) (4 Nodos)',
+          subtitle: 'El centro integrador ("saber un poco de todo"): Soporte Técnico (ITSM), Gestión de Activos, ERP/CRM y Administración Tecnológica',
+          border: 'border-amber-500/40',
+          headerBg: 'from-amber-500/20 to-transparent',
+          nodes: NODES.filter(n => n.category === 'ti')
+        },
+        {
+          key: 'software',
+          title: '2. Rama Ingeniería de Software (26 Especialidades)',
+          subtitle: 'Requisitos, Gestión Ágil/Producto, Frontend, Backend, FullStack, APIs/Microservicios, Bases de Datos (DBA), Low-Code/RPA, UI/UX, Móviles (General, Android, iOS, Apple), Escritorio, Arquitectura, Sistemas Distribuidos, Compiladores, Blockchain/Web3, Videojuegos, Realidad Extendida (AR/VR), IA, Visión/NLP, MLOps, Ingeniería y Ciencia de Datos, QA, Testing y Rendimiento',
+          border: 'border-indigo-500/40',
+          headerBg: 'from-indigo-500/20 to-transparent',
+          nodes: NODES.filter(n => n.category === 'software' && !n.isHub)
+        },
+        {
+          key: 'sistemas',
+          title: '3. Rama Ingeniería en Sistemas Computacionales (19 Especialidades de Infraestructura y Hardware)',
+          subtitle: 'Redes, Telecomunicaciones, Redes SDN/Inalámbricas, DevOps, SRE, Ingeniería de Plataformas, Ingeniería Cloud, DevSecOps, FinOps/Multi-Cloud, Administración de Servicios y SO, Virtualización/Data Centers, Alta Disponibilidad/DRP, Supercomputación (HPC), Kernel/Drivers, Automatización, Sistemas Embebidos, Arquitectura de Computadoras, Diseño Digital/FPGAs, IoT/Robótica y Control Industrial (OT/SCADA)',
+          border: 'border-emerald-500/40',
+          headerBg: 'from-emerald-500/20 to-transparent',
+          nodes: NODES.filter(n => n.category === 'sistemas' && !n.isHub)
+        },
+        {
+          key: 'blueteam',
+          title: '4. Ciberseguridad Defensiva (Blue Team), Purple Team, GRC y Arquitectura (10 Áreas)',
+          subtitle: 'Blue Team, SOC Analyst, Respuesta a Incidentes (IR), Informática Forense (DFIR), Analista de Malware, Threat Hunting/CTI, Purple Team, Ejecución Controlada de TTPs, Gobierno Riesgo y Cumplimiento (GRC) y Modelado de Amenazas',
+          border: 'border-sky-500/40',
+          headerBg: 'from-sky-500/20 to-transparent',
+          nodes: NODES.filter(n => n.category === 'cyber' && n.isBlue)
+        },
+        {
+          key: 'redteam',
+          title: '5. Ciberseguridad Ofensiva (Red Team, Pentesting, AppSec, Identidad y Cloud) (7 Áreas)',
+          subtitle: 'Red Team, Pentesting, Vulnerabilidades Web (AppSec), OSINT, Ingeniería Social/Phishing, Active Directory y Cloud Red Teaming',
+          border: 'border-rose-500/40',
+          headerBg: 'from-rose-500/20 to-transparent',
+          nodes: NODES.filter(n => n.category === 'cyber' && !n.isBlue && !n.isHub)
+        }
+      ];
+
+      container.innerHTML = sections.map(sec => {
+        const filtered = sec.nodes.filter(matchesSearchAndFilter);
+        if (filtered.length === 0) return '';
+        return `
+          <div class="rounded-2xl border ${sec.border} bg-slate-900/70 overflow-hidden">
+            <div class="p-4 bg-gradient-to-r ${sec.headerBg} border-b border-slate-800">
+              <h3 class="text-base font-bold text-white">${sec.title}</h3>
+              <p class="text-xs text-slate-300 mt-0.5">${sec.subtitle}</p>
+            </div>
+            <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              ${filtered.map(n => `
+                <div data-card-id="${n.id}" class="tree-card cursor-pointer rounded-xl p-3.5 bg-slate-950/90 border ${selectedNodeId === n.id ? 'border-white ring-1 ring-white' : 'border-slate-800 hover:border-slate-600'} transition flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between gap-2 mb-1">
+                      <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-slate-300">${n.badge}</span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white mb-1.5">${n.title}</h4>
+                    <p class="text-xs text-slate-400 line-clamp-3 leading-relaxed mb-3">${n.description}</p>
+                  </div>
+                  <div class="flex flex-wrap gap-1 pt-2 border-t border-slate-800/80">
+                    ${(n.tech || []).slice(0, 4).map(t => `
+                      <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-900 text-slate-300 border border-slate-800">${t}</span>
+                    `).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.querySelectorAll('.tree-card').forEach(card => {
+        card.addEventListener('click', () => {
+          selectNode(card.getAttribute('data-card-id'));
+        });
+      });
+    }
+
+    // SVG Pan & Zoom Logic
+    function updateViewBox() {
+      svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+      const zoomPct = Math.round((DEFAULT_VB.w / vb.w) * 100);
+      zoomLevelText.textContent = `${zoomPct}%`;
+    }
+
+    function zoomBy(factor) {
+      const centerX = vb.x + vb.w / 2;
+      const centerY = vb.y + vb.h / 2;
+      const newW = Math.min(Math.max(vb.w * factor, 900), 4600);
+      const newH = Math.min(Math.max(vb.h * factor, 550), 2900);
+      vb.w = newW;
+      vb.h = newH;
+      vb.x = centerX - newW / 2;
+      vb.y = centerY - newH / 2;
+      updateViewBox();
+    }
+
+    svg.addEventListener('mousedown', (e) => {
+      isPanning = true;
+      panStart = { x: e.clientX, y: e.clientY };
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      const rect = svg.getBoundingClientRect();
+      const scaleX = vb.w / rect.width;
+      const scaleY = vb.h / rect.height;
+      vb.x -= (e.clientX - panStart.x) * scaleX;
+      vb.y -= (e.clientY - panStart.y) * scaleY;
+      panStart = { x: e.clientX, y: e.clientY };
+      updateViewBox();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isPanning = false;
+    });
+
+    svg.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const factor = e.deltaY > 0 ? 1.1 : 0.9;
+      zoomBy(factor);
+    }, { passive: false });
+
+    // Touch pan support
+    svg.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isPanning = true;
+        panStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    }, { passive: true });
+
+    svg.addEventListener('touchmove', (e) => {
+      if (!isPanning || e.touches.length !== 1) return;
+      const rect = svg.getBoundingClientRect();
+      const scaleX = vb.w / rect.width;
+      const scaleY = vb.h / rect.height;
+      vb.x -= (e.touches[0].clientX - panStart.x) * scaleX;
+      vb.y -= (e.touches[0].clientY - panStart.y) * scaleY;
+      panStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      updateViewBox();
+    }, { passive: true });
+
+    svg.addEventListener('touchend', () => {
+      isPanning = false;
+    });
+
+    // Controls Listeners
+    document.getElementById('zoomInBtn').addEventListener('click', () => zoomBy(0.82));
+    document.getElementById('zoomOutBtn').addEventListener('click', () => zoomBy(1.22));
+    document.getElementById('resetViewBtn').addEventListener('click', () => {
+      vb = { ...DEFAULT_VB };
+      updateViewBox();
+    });
+
+    // Filter Buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentFilter = btn.getAttribute('data-filter');
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('ring-2', 'ring-white');
+        });
+        btn.classList.add('ring-2', 'ring-white');
+
+        // Auto-focus camera on selected cluster
+        if (currentFilter === 'software') {
+          vb = { x: -1380, y: -710, w: 1220, h: 1320 };
+        } else if (currentFilter === 'sistemas') {
+          vb = { x: 200, y: -730, w: 1200, h: 1180 };
+        } else if (currentFilter === 'cyber') {
+          vb = { x: 340, y: -40, w: 960, h: 860 };
+        } else if (currentFilter === 'blueteam') {
+          vb = { x: 360, y: -10, w: 920, h: 560 };
+        } else if (currentFilter === 'ti') {
+          vb = { x: -480, y: -280, w: 960, h: 600 };
+        } else {
+          vb = { ...DEFAULT_VB };
+        }
+        updateViewBox();
+        renderMindMap();
+        renderTreeView();
+      });
+    });
+
+    // Search Input
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      clearSearchBtn.classList.toggle('hidden', !searchQuery);
+      renderMindMap();
+      renderTreeView();
+
+      if (searchQuery.trim()) {
+        const firstMatch = NODES.find(matchesSearchAndFilter);
+        if (firstMatch && firstMatch.id !== selectedNodeId) {
+          selectNode(firstMatch.id);
+        }
+      }
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      clearSearchBtn.classList.add('hidden');
+      renderMindMap();
+      renderTreeView();
+    });
+
+    // Previous / Next Node Navigation
+    document.getElementById('prevNodeBtn').addEventListener('click', () => {
+      const idx = NODES.findIndex(n => n.id === selectedNodeId);
+      const prevIdx = (idx - 1 + NODES.length) % NODES.length;
+      selectNode(NODES[prevIdx].id);
+    });
+
+    document.getElementById('nextNodeBtn').addEventListener('click', () => {
+      const idx = NODES.findIndex(n => n.id === selectedNodeId);
+      const nextIdx = (idx + 1) % NODES.length;
+      selectNode(NODES[nextIdx].id);
+    });
+
+    // View Tabs
+    const tabMapBtn = document.getElementById('tabMapBtn');
+    const tabTreeBtn = document.getElementById('tabTreeBtn');
+    const tabSynergyBtn = document.getElementById('tabSynergyBtn');
+    const viewMap = document.getElementById('viewMap');
+    const viewTree = document.getElementById('viewTree');
+    const viewSynergy = document.getElementById('viewSynergy');
+    const mapControlsBar = document.getElementById('mapControlsBar');
+
+    function switchTab(tab) {
+      currentTab = tab;
+      viewMap.classList.toggle('hidden', tab !== 'map');
+      viewTree.classList.toggle('hidden', tab !== 'tree');
+      viewSynergy.classList.toggle('hidden', tab !== 'synergy');
+      mapControlsBar.classList.toggle('hidden', tab !== 'map');
+
+      [
+        [tabMapBtn, tab === 'map'],
+        [tabTreeBtn, tab === 'tree'],
+        [tabSynergyBtn, tab === 'synergy']
+      ].forEach(([btn, active]) => {
+        if (active) {
+          btn.className = 'px-3 py-1 rounded-md text-xs font-semibold bg-indigo-600 text-white transition';
+        } else {
+          btn.className = 'px-3 py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition';
+        }
+      });
+    }
+
+    tabMapBtn.addEventListener('click', () => switchTab('map'));
+    tabTreeBtn.addEventListener('click', () => switchTab('tree'));
+    tabSynergyBtn.addEventListener('click', () => switchTab('synergy'));
+
+    // Initialize
+    updateViewBox();
+    selectNode('core');
+  </script>
+</body>
+</html>

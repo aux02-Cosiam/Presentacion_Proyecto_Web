@@ -1169,3 +1169,29 @@ footer {
     color: var(--text-muted);
     display: block;
 }
+
+/* ================= ESTILOS PARA EL MAPA MENTAL (IFRAME) ================= */
+.iframe-container {
+    width: 100%;
+    height: 850px; /* Altura amplia para que el mapa SVG de 68 nodos luzca bien */
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+    background-color: #0b0f19; /* Mismo fondo oscuro del mapa para evitar flash blanco */
+    position: relative;
+    z-index: 1;
+}
+
+.iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+@media (max-width: 980px) {
+    .iframe-container {
+        height: 650px;
+    }
+}
